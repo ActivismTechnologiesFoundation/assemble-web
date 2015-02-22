@@ -2,6 +2,8 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  root 'static_pages#root'
+
   # Uncomment block to restrict access to admins 
   # (requires devise and role_models are implemented)
   
