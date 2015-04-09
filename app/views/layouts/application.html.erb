@@ -10,9 +10,13 @@
 
   <%= yield %>
 
-    <script>
-      <%= yeild :javascripts %>
-    </script>
-    
+  <%= render "/layouts/bootstrap_js_data" %>
+
+  <script>
+    <%= yeild :javascripts %>
+  </script>
+
+  <%= render "/layouts/javascript_includes" %>
+
   </body>
 </html>

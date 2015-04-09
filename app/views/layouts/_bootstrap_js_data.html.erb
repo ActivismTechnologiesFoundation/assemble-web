@@ -1,0 +1,17 @@
+<script>
+  var AssembleApp = window.AssembleApp = {
+    Models: {},
+    Collections: {},
+    Views: {},
+    Routers: {},
+    Data: { 
+      Shared: {
+        //apiKey: <%= "\"#{ApiKey.all[1].access_token}\"".html_safe %>,
+        //localStorageKey: <%= current_user.blank? ?  "null" : "\"math_crunch_#{current_user.id}\"".html_safe %>
+      }
+    },
+    Environment: <%= "\"#{Rails.env}\"".html_safe %>,
+    //currentUser: <%= current_user.blank? ? "null" : current_user.info.to_json.html_safe %>,
+    // settings: <%= Settings.main.json.html_safe %>
+  };
+</script>

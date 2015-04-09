@@ -12,4 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require ./lib/underscore-min.js
+//= require_tree ./lib/
+//= require ./Models/MomentifiedModel.js
+//= require ./Models/LoadableModel.js
+//= require_directory ./Models
+//= require ./app_skellington.js
 //= require_tree .
