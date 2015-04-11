@@ -19,3 +19,11 @@
 //= require_directory ./Models
 //= require ./app_skellington.js
 //= require_tree .
+
+// this must come after our modules
+(function ($) {
+    window.AssembleAppRouter = new AssembleApp.Router();
+    Backbone.history.start({pushState: true});
+
+    $('input[name=authenticity_token]').val($('meta[name=csrf-token]').attr('content'));
+})(jQuery);
