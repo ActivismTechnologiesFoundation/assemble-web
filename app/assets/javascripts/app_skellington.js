@@ -9,6 +9,10 @@
       ":module(/*subroute)" : "initView"
     },
 
+    landingPage: function(){
+      
+    },
+
     initialize: function(){
       AssembleApp.title = document.title;
       AssembleApp.settings = new AssembleApp.Models.Settings(AssembleApp.settings);

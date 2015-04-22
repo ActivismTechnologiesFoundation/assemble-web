@@ -11,10 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150404182000) do
+ActiveRecord::Schema.define(version: 20150422021226) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_keys", force: true do |t|
+    t.string   "app_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_keys", ["app_id"], name: "index_api_keys_on_app_id", unique: true, using: :btree
 
   create_table "events", force: true do |t|
     t.string   "name"
