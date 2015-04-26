@@ -10,7 +10,7 @@
     },
 
     landingPage: function(){
-      
+      this.RootView = new AssembleApp.Views.RootView(AssembleApp.Data.Root);
     },
 
     initialize: function(){

@@ -6,7 +6,7 @@
     Routers: {},
     Data: { 
       Shared: {
-        apiKey: <%= ApiKey.all[0].app_id.to_s.html_safe %>,
+        apiKey: <%= ApiKey.all[0].app_id.inspect.html_safe %>,
         //localStorageKey: <%# current_user.blank? ?  "null" : "\"math_crunch_#{current_user.id}\"".html_safe %>
       }
     },
