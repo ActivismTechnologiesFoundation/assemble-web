@@ -407,6 +407,7 @@ DEPENDENCIES
   heroku_rails_deflate
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   launchy
   less-rails
   letter_opener

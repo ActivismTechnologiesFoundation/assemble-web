@@ -25,6 +25,10 @@ gem 'sinatra', require: false
 
 gem 'activeadmin', github: 'activeadmin/active_admin'
 
+gem 'kaminari'
+
+gem 'faker'
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.0'
   gem 'guard-rspec'
@@ -32,7 +36,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'launchy'
   gem 'timecop'
-  gem 'faker'
 end
 
 group :test do

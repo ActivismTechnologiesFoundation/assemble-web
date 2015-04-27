@@ -1,2 +1,22 @@
 <div class="container" id="events-top-level-view">
 </div>
+
+<script id="events-top-level-view-template" type="text/x-handlebars-template">
+  <h2>Events</h2>
+  <div id="filter-controls"></div>
+  <ul id="events-list"></ul>
+</script> 
+
+<script id="event-list-cell-view-template" type="text/x-handlebars-template">
+  <p>{{name}}</p>
+  <p>{{topic}}</p>
+  <p>{{description}}</p>
+  <div class="address">
+    {{address.line1}}</br>
+    {{address.line2}}</br>
+    {{address.city}} {{address.state}}, {{address.zipcode}}
+  </div>
+  <p>{{url}}</p>
+  <p>{{starts_at}}</p>
+  <p>{{ends_at}}</p>
+</script>
