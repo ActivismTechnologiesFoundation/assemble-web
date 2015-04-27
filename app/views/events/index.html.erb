@@ -4,7 +4,7 @@
 <script id="events-top-level-view-template" type="text/x-handlebars-template">
   <h2>Events</h2>
   <div id="filter-controls"></div>
-  <ul id="events-list"></ul>
+  <ul id="events-list" class="test-class"></ul>
 </script> 
 
 <script id="event-list-cell-view-template" type="text/x-handlebars-template">
@@ -17,6 +17,6 @@
     {{address.city}} {{address.state}}, {{address.zipcode}}
   </div>
   <p>{{url}}</p>
-  <p>{{starts_at}}</p>
-  <p>{{ends_at}}</p>
+  <p>{{momentToString starts_at "MMM -DD @ h:mm:ss a"}}</p>
+  <p>{{momentToString ends_at "MMM - DD @ h:mm:ss a"}}</p>
 </script>

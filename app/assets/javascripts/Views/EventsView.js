@@ -15,7 +15,7 @@
 
       this.render();
 
-      this.eventsCollection.fetch({reset: true});//{success: _.bind(function(response){console.log(response)}, this)});
+      this.eventsCollection.fetch();//{success: _.bind(function(response){console.log(response)}, this)});
     },
 
     render: function() {
@@ -45,6 +45,8 @@
 
     render: function() {
       this.$el.html(this.template(this.model.toJSON()));
+
+      return this.$el;
     }
   });
 

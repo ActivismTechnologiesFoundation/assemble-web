@@ -8,7 +8,7 @@ module Api
       end
 
       def index
-        @events = Event.all
+        @events = Event.limit(10)
       end
 
       def create
