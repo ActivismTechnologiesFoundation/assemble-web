@@ -8,15 +8,15 @@
 </script> 
 
 <script id="event-list-cell-view-template" type="text/x-handlebars-template">
-  <p>{{name}}</p>
-  <p>{{topic}}</p>
+  <h4>{{name}}</h4>
+
   <p>{{description}}</p>
-  <div class="address">
-    {{address.line1}}</br>
-    {{address.line2}}</br>
-    {{address.city}} {{address.state}}, {{address.zipcode}}
-  </div>
-  <p>{{url}}</p>
-  <p>{{momentToString starts_at "MMM -DD @ h:mm:ss a"}}</p>
-  <p>{{momentToString ends_at "MMM - DD @ h:mm:ss a"}}</p>
+
+  <p>{{momentToString starts_at "dddd, MMMM DD @ h:mm a"}}</p>
+
+  <p class="address">
+    {{address.line1}} {{address.line2}}, {{address.city}} {{address.state}}, {{address.zipcode}}
+  </p>
+
+  <a href="{{url}}">More information</a>
 </script>

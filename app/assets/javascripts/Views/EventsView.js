@@ -15,7 +15,7 @@
 
       this.render();
 
-      this.eventsCollection.fetch();//{success: _.bind(function(response){console.log(response)}, this)});
+      this.eventsCollection.fetch();
     },
 
     render: function() {
