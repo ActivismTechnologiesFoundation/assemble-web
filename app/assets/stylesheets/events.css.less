@@ -2,14 +2,16 @@
   height: 100%;
   width: ~"calc(100% - 200px)";
   margin: 0 auto;
-  
+
   h2 {
     margin: 0;
+    color: @orange;
   }
   #events-list {
     margin: 0 auto;
     height: ~"calc(100% - 50px)";
     width: 100%;
+    max-width: 500px;
     overflow: auto;
     padding: 0;
     list-style: none;  
@@ -18,5 +20,10 @@
 
   .event-cell {
     padding: 10px;
+    color: @gray
+  }
+
+  .event-cell .name {
+    color: @orange;
   }
 }

@@ -6,7 +6,7 @@ ApiKey.find_or_create_by!(app_id: "web_app_id")
 
 (1..100).each do 
   Event.create!(
-    name: Faker::Lorem.word,
+    name: Faker::Lorem.words(rand(3..5)).join(" "),
     topic: Faker::Lorem.word,
     description: Faker::Lorem.paragraph,
     address: "#{Faker::Address.street_address},"+
