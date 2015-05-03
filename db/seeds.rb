@@ -3,11 +3,12 @@
 
 ApiKey.find_or_create_by!(app_id: "web_app_id")
 
+topics = ['social', 'environment', 'gender', 'race', 'animals', 'science', 'business']
+topics.each { |t| Topic.create!(name: t) }
 
 (1..100).each do 
-  Event.create!(
+  e = Event.create!(
     name: Faker::Lorem.words(rand(3..5)).join(" "),
-    topic: Faker::Lorem.word,
     description: Faker::Lorem.paragraph,
     address: "#{Faker::Address.street_address},"+
              "#{Faker::Address.secondary_address},"+
@@ -18,4 +19,5 @@ ApiKey.find_or_create_by!(app_id: "web_app_id")
     starts_at: Faker::Time.between(Time.now, Time.now + 1.month),
     ends_at: Faker::Time.between(Time.now, Time.now + 1.month)
   )
+  e.topics << Topic.find_by(name: topics[rand(topics.count)])
 end

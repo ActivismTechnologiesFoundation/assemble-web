@@ -1,9 +1,17 @@
 <div class="container" id="events-top-level-view">
 </div>
 
+<% content_for :javascripts do %>
+  AssembleApp.Data.Events = {
+    topics: <%= @topics.to_json.html_safe %>
+  }
+<% end %>
+
 <script id="events-top-level-view-template" type="text/x-handlebars-template">
   <h2>Events</h2>
-  <div id="filter-controls"></div>
+  <div id="filter-controls">
+    <div id="topic-select"></div>
+  </div>
   <ul id="events-list" class="test-class"></ul>
 </script> 
 
@@ -19,4 +27,12 @@
   </p>
 
   <a href="{{url}}">More information</a>
+</script>
+
+<script id="custom-select-view-template" type="text/x-handlebars-template">
+  <select class="native">
+    {{#each values}}
+      <option value="{{id}}">{{name}}</option>
+    {{/each}}
+  </select>
 </script>
