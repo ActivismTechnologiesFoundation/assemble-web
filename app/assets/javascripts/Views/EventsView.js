@@ -64,26 +64,36 @@
 
   AssembleApp.Views.CustomSelectView = Backbone.View.extend({
     events: {
-      'change select': 'valueChanged'
+      'click li': 'valueChanged'
     },
 
     initialize: function() {
-      this.template = Handlebars.compile($('#custom-select-view-template').html());
+      this.template = Handlebars.compile($('#topic-select-view-template').html());
+      this.selectedValue = new Backbone.Model({name: "Select a Topic"});
     },
 
     render: function() {
-      var data = { values: this.collection.toJSON(), selected: this.$('select').val()};
+      var data = { values: this.collection.toJSON(), selected: this.currentValue().get('name')};
       this.$el.html(this.template(data));
 
       return this.$el;
     },
 
-    valueChanged: function() {
-      this.trigger('value_changed', this.currentValue());
+    valueChanged: function(event) {
+      var $selectedItem = $(event.currentTarget),
+          selectedId = $selectedItem.data('id');
+
+      this.selectedValue = this.collection.get(selectedId);
+      this.trigger('value_changed', this.selectedValue);
+
+      this.render();
+
+      this.$('li').removeClass('selected');
+      this.$('li[data-id='+selectedId+']').addClass('selected');
     },
 
     currentValue: function() {
-      return this.collection.get(this.$('select').val());
+      return this.selectedValue;
     },
   });
 

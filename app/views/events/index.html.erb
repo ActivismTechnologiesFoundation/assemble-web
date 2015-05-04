@@ -8,11 +8,16 @@
 <% end %>
 
 <script id="events-top-level-view-template" type="text/x-handlebars-template">
-  <h2>Events</h2>
-  <div id="filter-controls">
-    <div id="topic-select"></div>
+  <div class="side-bar">
+    <div id="filter-controls">
+      <div id="topic-select"></div>
+    </div>
   </div>
-  <ul id="events-list" class="test-class"></ul>
+
+  <div class="main">
+    <h2>Events</h2>
+    <ul id="events-list" class="test-class"></ul>
+  </div>
 </script> 
 
 <script id="event-list-cell-view-template" type="text/x-handlebars-template">
@@ -29,10 +34,11 @@
   <a href="{{url}}">More information</a>
 </script>
 
-<script id="custom-select-view-template" type="text/x-handlebars-template">
-  <select class="native">
+<script id="topic-select-view-template" type="text/x-handlebars-template">
+  <div class="selected">{{selected}}</div>
+  <ul class="options">
     {{#each values}}
-      <option value="{{id}}">{{name}}</option>
+      <li data-id="{{id}}">{{name}}</li>
     {{/each}}
-  </select>
+  </ul>
 </script>

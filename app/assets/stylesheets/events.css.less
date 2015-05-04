@@ -1,22 +1,46 @@
 #events-top-level-view {
   height: 100%;
   width: ~"calc(100% - 200px)";
+  max-width: 1080px;
   margin: 0 auto;
+
   .font-default;
 
   h2 {
     margin: 0;
     color: @orange;
   }
+
+  .main {
+    width: 80%;
+    height: 100%;
+    float: right;
+  }
+
+  .side-bar {
+    width: 20%;
+    height: 100%;
+    float: left;
+  }
+
+  #topic-select {
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .selected {
+      color: blue;
+    }
+  }
+
   #events-list {
     margin: 0 auto;
+    padding: 0;
     height: ~"calc(100% - 50px)";
     width: 100%;
-    max-width: 500px;
     overflow: auto;
-    padding: 0;
     list-style: none;  
-    border: 1px solid black;
   }
 
   #topic-select .custom{
