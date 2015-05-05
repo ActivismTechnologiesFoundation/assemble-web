@@ -1,4 +1,4 @@
-<div class="container" id="events-top-level-view">
+<div class='container' id='events-top-level-view'>
 </div>
 
 <% content_for :javascripts do %>
@@ -7,38 +7,38 @@
   }
 <% end %>
 
-<script id="events-top-level-view-template" type="text/x-handlebars-template">
-  <div class="side-bar">
-    <div id="filter-controls">
-      <div id="topic-select"></div>
+<script id='events-top-level-view-template' type='text/x-handlebars-template'>
+  <div class='side-bar'>
+    <div id='filter-controls'>
+      <div id='topic-select'></div>
     </div>
   </div>
 
-  <div class="main">
+  <div class='main'>
     <h2>Events</h2>
-    <ul id="events-list" class="test-class"></ul>
+    <ul id='events-list' class='test-class'></ul>
   </div>
 </script> 
 
-<script id="event-list-cell-view-template" type="text/x-handlebars-template">
-  <h4 class="name">{{name}}</h4>
+<script id='event-list-cell-view-template' type='text/x-handlebars-template'>
+  <h4 class='name'>{{name}}</h4>
 
   <p>{{description}}</p>
 
-  <p>{{momentToString starts_at "dddd, MMMM DD @ h:mm a"}}</p>
+  <p>{{momentToString starts_at 'dddd, MMMM DD @ h:mm a'}}</p>
 
-  <p class="address">
+  <p class='address'>
     {{address.line1}} {{address.line2}}, {{address.city}} {{address.state}}, {{address.zipcode}}
   </p>
 
-  <a href="{{url}}">More information</a>
+  <a href='{{url}}'>More information</a>
 </script>
 
-<script id="topic-select-view-template" type="text/x-handlebars-template">
-  <div class="selected">{{selected}}</div>
-  <ul class="options">
+<script id='topic-select-view-template' type='text/x-handlebars-template'>
+  <div class='dropdown'>{{selected}}</div>
+  <ul class='options'>
     {{#each values}}
-      <li data-id="{{id}}">{{name}}</li>
+      <li data-id='{{id}}'>{{name}}</li>
     {{/each}}
   </ul>
 </script>

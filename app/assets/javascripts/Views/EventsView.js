@@ -13,6 +13,7 @@
         type: 'event'
       });
 
+      options.topics.push({id: 0, name: "All"});
       var topics = new Backbone.Collection(options.topics);
       this.topicSelect = new AssembleApp.Views.CustomSelectView({
         collection: topics
@@ -64,6 +65,7 @@
 
   AssembleApp.Views.CustomSelectView = Backbone.View.extend({
     events: {
+      'click .dropdown': 'toggleDropdown',
       'click li': 'valueChanged'
     },
 
@@ -90,6 +92,12 @@
 
       this.$('li').removeClass('selected');
       this.$('li[data-id='+selectedId+']').addClass('selected');
+
+      this.toggleDropdown();
+    },
+
+    toggleDropdown: function() {
+      this.$(".options").is(":visible") ? this.$(".options").hide() : this.$(".options").show();
     },
 
     currentValue: function() {

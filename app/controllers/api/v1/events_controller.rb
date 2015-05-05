@@ -8,7 +8,9 @@ module Api
       end
 
       def index
-        @events = if topic_id = params[:topic_id]
+        topic_id = params[:topic_id].to_i
+
+        @events = if topic_id && topic_id > 0
           Topic.find(topic_id).events.limit(10)
         else
           Event.limit(10)
