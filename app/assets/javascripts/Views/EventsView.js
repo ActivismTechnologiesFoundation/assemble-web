@@ -92,12 +92,10 @@
 
       this.$('li').removeClass('selected');
       this.$('li[data-id='+selectedId+']').addClass('selected');
-
-      this.toggleDropdown();
     },
 
-    toggleDropdown: function() {
-      this.$(".options").is(":visible") ? this.$(".options").hide() : this.$(".options").show();
+    toggleDropdown: function(event) {
+      this.$('ul').toggle();
     },
 
     currentValue: function() {

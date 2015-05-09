@@ -1,4 +1,5 @@
 #events-top-level-view {
+  padding-top: @navBarHeight + 20px;
   height: 100%;
   width: ~"calc(100% - 200px)";
   max-width: 1080px;
@@ -15,18 +16,30 @@
     width: 80%;
     height: 100%;
     float: right;
+    background-color: white;
   }
 
   .side-bar {
-    width: 20%;
+    width: ~"calc(20% - 10px)";
+    margin-right: 10px;
     height: 100%;
     float: left;
+    background-color: white;
   }
 
   #topic-select {
+    color: @orange;
+
+    .dropdown {
+      border: 1px solid @orange;
+      border-radius: 5px;
+    }
+
     ul {
       list-style: none;
+      display: none;
       padding: 0;
+      margin: 0;
     }
 
     .selected {
