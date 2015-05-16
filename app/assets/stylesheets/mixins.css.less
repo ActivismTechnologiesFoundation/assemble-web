@@ -46,3 +46,33 @@ src: url('Helvetica-Neue-webfont.eot?#iefix') format('embedded-opentype'),
   font-weight: lighter;
   font-style: italic;
 }
+
+// Layout
+
+.vertical-align(@percent: 50%) {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-@percent);
+  -ms-transform: translateY(-@percent);
+  transform: translateY(-@percent);
+}
+
+
+// Components
+.button(@color: @orange, @text-color: white) {
+  display: block;
+  width: 100px;
+  line-height: 30px;
+  border: 1px solid @color;
+  border-radius: 5px;
+  padding: 5px;
+  text-decoration: none;
+  font-weight: lighter;
+  color: @text-color;
+  background-color: @color; 
+
+  &:hover {
+    background-color: default;
+    color: @color;
+  }
+}
