@@ -57,6 +57,14 @@ src: url('Helvetica-Neue-webfont.eot?#iefix') format('embedded-opentype'),
   transform: translateY(-@percent);
 }
 
+.horizontal-align(@percent: 50%) {
+  position: relative;
+  left: 50%;
+  -webkit-transform: translateX(-@percent);
+  -ms-transform: translateX(-@percent);
+  transform: translateX(-@percent);
+}
+
 
 // Components
 .button(@color: @orange, @text-color: white) {
@@ -72,7 +80,7 @@ src: url('Helvetica-Neue-webfont.eot?#iefix') format('embedded-opentype'),
   background-color: @color; 
 
   &:hover {
-    background-color: default;
+    background-color: inherit;
     color: @color;
   }
 }

@@ -10,32 +10,51 @@
     padding: 50px;
     background-color: white;
     border-radius: 10px;
+    overflow: hidden;
 
     text-align: center;
     .vertical-align;
-  }
-
-  h1 {
-    margin-bottom:30px;
-    font-size: 80px;
-    line-height: 80px;
-    font-weight: lighter;
-  }
-
-  .call-to-action {
-    margin-bottom: 15px;
-    padding: 30px 0;
-    font-size: 20px;
-    line-height: 25px;
-    font-weight: lighter;
   }
 
   h1, .call-to-action {
     margin: 0;
   }
 
-  .get-started {
-    .button(@orange);
-    margin: 0 auto;
+  h1 {
+    margin-bottom:15px;
+    font-size: 80px;
+    line-height: 80px;
+    font-weight: lighter;
+  }
+
+  .call-to-action {
+    margin-bottom: 30px;
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: lighter;
+  }
+
+  form {
+    .horizontal-align;
+    display: block;
+    float: left;
+
+    .get-started {
+      .button(@orange);
+      float: right;
+      margin-left: 10px;
+    }
+
+    input {
+      float: left;
+      width: 200px;
+      height: 40px;
+      font-size: 15px;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid @gray;
+
+      text-align: center;
+    }
   }
 }

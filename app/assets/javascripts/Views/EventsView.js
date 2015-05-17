@@ -47,6 +47,17 @@
 
   });
 
+  AssembleApp.Views.EventForm = Backbone.View.extend({
+    initialize: function() {
+      this.template = Handlebars.compile($('#event-form-template').html());
+    },
+
+    render: function() {
+      var data = this.model.toJSON();
+      this.$el.html(this.template(data));
+    }
+  });
+
   AssembleApp.Views.EventListCellView = Backbone.View.extend({
     tagName: 'li',
 
