@@ -51,7 +51,7 @@ src: url('Helvetica-Neue-webfont.eot?#iefix') format('embedded-opentype'),
 
 .vertical-align(@percent: 50%) {
   position: relative;
-  top: 50%;
+  top: @percent;
   -webkit-transform: translateY(-@percent);
   -ms-transform: translateY(-@percent);
   transform: translateY(-@percent);
@@ -59,10 +59,19 @@ src: url('Helvetica-Neue-webfont.eot?#iefix') format('embedded-opentype'),
 
 .horizontal-align(@percent: 50%) {
   position: relative;
-  left: 50%;
+  left: @percent;
   -webkit-transform: translateX(-@percent);
   -ms-transform: translateX(-@percent);
   transform: translateX(-@percent);
+}
+
+.center-align(@percentX: 50%, @percentY: 50%) {
+  position: relative;
+  left: @percentX;
+  top: @percentY;
+  -webkit-transform: translate(-@percentX, -@percentY);
+  -ms-transform: translate(-@percentX, -@percentY);
+  transform: translate(-@percentX, -@percentY);
 }
 
 

@@ -12,6 +12,7 @@
 <script id='events-top-level-view-template' type='text/x-handlebars-template'>
   <div class='side-bar'>
     <div id='filter-controls'>
+      <div id='add-event'>Add Event</div>
       <div id='topic-select'></div>
     </div>
   </div>
@@ -46,4 +47,9 @@
 </script>
 
 <script id='event-form-template' type='text/x-handlebars-template'>
+  <form>
+    <input type='text' placeholder='Name of Event'/>
+    <textarea type='text' placeholder='Brief description of event'/>
+    <input type='text' placeholder='Website for event'/>
+  </form>
 </script>

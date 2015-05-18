@@ -3,6 +3,10 @@
   AssembleApp.Views.EventsView = Backbone.View.extend({
     el: $('#events-top-level-view'),
 
+    events: {
+      'click #add-event': 'showEventForm'
+    },
+
     initialize: function(options) {
       this.template = Handlebars.compile($('#events-top-level-view-template').html());
       this.eventsCollection = new AssembleApp.Collections.Events();
@@ -43,18 +47,38 @@
 
     fetchEvents: function(topic) {
       this.eventsCollection.fetch({data: {topic_id: topic.id}, reset: true});
+    },
+
+    showEventForm: function() {
+      this.eventForm = new AssembleApp.Views.EventForm();
+      $('body').append(this.eventForm.render());
     }
 
   });
 
   AssembleApp.Views.EventForm = Backbone.View.extend({
+    tag: 'div',
+
+    className: 'event-form-container',
+
+    events: {
+      'submit' : 'submit'
+    },
+
     initialize: function() {
+      this.model || (this.model = new AssembleApp.Models.Event());
       this.template = Handlebars.compile($('#event-form-template').html());
     },
 
     render: function() {
       var data = this.model.toJSON();
       this.$el.html(this.template(data));
+
+      return this.$el;
+    },
+
+    submit: function(){
+      
     }
   });
 
