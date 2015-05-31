@@ -95,17 +95,29 @@
 
   form {
     .center-align;
-    width: 300px;
-    height: 200px;
     float: left;
     padding: 30px;
     border-radius: 10px;
     background-color: white;
 
-
-    input, textarea {
+    input, textarea, button {
       float: left;
       clear: left;
+      margin-top: 10px;
+    }
+
+    input, textarea {
+      width: 300px;
+    }
+
+    button {
+      .button;
+      .horizontal-align;
+      width: 250px; 
+    }
+
+    :first-child {
+      margin-top: 0;
     }
   }
 }
