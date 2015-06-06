@@ -27,19 +27,29 @@
     background-color: white;
   }
 
+
+  #topic-select h3, #add-event {
+    color: @orange;
+    border-bottom: 1px solid @orange;
+    font-size: 20px;
+    padding: 11px;
+    font-weight: lighter;
+    margin: 0;
+  }
+
+  #add-event {
+    margin-bottom: 10px;
+    span {
+      padding-left: 10px;
+      font-size: 30px;
+    }
+  }
+
   #topic-select {
     color: @orange;
 
-    .dropdown {
-      border: 1px solid @orange;
-      border-radius: 5px;
-      font-size: 25px;
-      padding: 15px;
-    }
-
     ul {
       list-style: none;
-      display: none;
       padding: 0px 8px;
       margin: 0;
     }
@@ -108,6 +118,10 @@
 
     input, textarea {
       width: 300px;
+    }
+
+    textarea {
+      resize: none;
     }
 
     button {

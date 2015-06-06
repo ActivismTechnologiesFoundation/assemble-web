@@ -12,7 +12,7 @@
 <script id='events-top-level-view-template' type='text/x-handlebars-template'>
   <div class='side-bar'>
     <div id='filter-controls'>
-      <div id='add-event'>Add Event</div>
+      <div id='add-event'>Add Event<span>+</span></div>
       <div id='topic-select'></div>
     </div>
   </div>
@@ -38,10 +38,10 @@
 </script>
 
 <script id='topic-select-view-template' type='text/x-handlebars-template'>
-  <div class='dropdown'>{{selected}}</div>
+  <h3>Select a Topic</h3>
   <ul class='options'>
     {{#each values}}
-      <li class='option' data-id='{{id}}'>{{name}}</li>
+      <li class='option {{classes}}' data-id='{{id}}'>{{name}}</li>
     {{/each}}
   </ul>
 </script>

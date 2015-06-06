@@ -17,11 +17,11 @@
         type: 'event'
       });
 
-      options.topics.push({id: 0, name: "All"});
       var topics = new Backbone.Collection(options.topics);
       this.topicSelect = new AssembleApp.Views.CustomSelectView({
         collection: topics
       });
+      this.topicSelect.setSelected(topics.at(topics.length-1));
 
       this.listenTo(this.topicSelect, 'value_changed', this.fetchEvents);
 
@@ -62,6 +62,7 @@
     className: 'event-form-container',
 
     events: {
+      'click'  : 'dismiss',
       'submit' : 'submit'
     },
 
@@ -77,8 +78,15 @@
       return this.$el;
     },
 
-    submit: function(){
-      
+    submit: function(event){
+      event.preventDefault();
+    },
+
+    dismiss: function(event) {
+      if(event.target != this.$('form').get(0) && 
+         $(event.target).parent('form').length == 0) {
+        this.$el.remove();
+      }
     }
   });
 
@@ -100,13 +108,11 @@
 
   AssembleApp.Views.CustomSelectView = Backbone.View.extend({
     events: {
-      'click .dropdown': 'toggleDropdown',
       'click li': 'valueChanged'
     },
 
     initialize: function() {
       this.template = Handlebars.compile($('#topic-select-view-template').html());
-      this.selectedValue = new Backbone.Model({name: "Select a Topic"});
     },
 
     render: function() {
@@ -120,17 +126,19 @@
       var $selectedItem = $(event.currentTarget),
           selectedId = $selectedItem.data('id');
 
-      this.selectedValue = this.collection.get(selectedId);
-      this.trigger('value_changed', this.selectedValue);
-
-      this.render();
-
-      this.$('li').removeClass('selected');
-      this.$('li[data-id='+selectedId+']').addClass('selected');
+      this.setSelected(this.collection.get(selectedId));
     },
 
-    toggleDropdown: function(event) {
-      this.$('ul').toggle();
+    setSelected: function(selectedValue) {
+      this.currentValue() ? this.currentValue().set('classes', '') : 0;
+
+      selectedValue.set('classes', 'selected');
+
+      this.selectedValue = selectedValue;
+
+      this.trigger('value_changed', selectedValue);
+
+      this.render();
     },
 
     currentValue: function() {
