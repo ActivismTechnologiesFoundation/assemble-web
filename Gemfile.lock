@@ -427,3 +427,6 @@ DEPENDENCIES
   vcr
   webmock (= 1.12)
   webrat
+
+BUNDLED WITH
+   1.10.4

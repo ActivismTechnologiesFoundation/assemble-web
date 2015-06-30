@@ -17,11 +17,11 @@
         type: 'event'
       });
 
-      var topics = new Backbone.Collection(options.topics);
+      this.topics = new Backbone.Collection(options.topics);
       this.topicSelect = new AssembleApp.Views.CustomSelectView({
-        collection: topics
+        collection: this.topics
       });
-      this.topicSelect.setSelected(topics.at(topics.length-1));
+      this.topicSelect.setSelected(this.topics.at(this.topics.length-1));
 
       this.listenTo(this.topicSelect, 'value_changed', this.fetchEvents);
 
@@ -35,7 +35,7 @@
 
       this.$el.html(this.template(data));
 
-      this.assign(this.topicSelect, '#topic-select')
+      this.assign(this.topicSelect, '#topic-select');
       this.assign(this.eventsListView, '#events-list');
 
       return this.$el;
@@ -50,8 +50,15 @@
     },
 
     showEventForm: function() {
-      this.eventForm = new AssembleApp.Views.EventForm();
-      $('body').append(this.eventForm.render());
+      var eventForm = new AssembleApp.Views.EventForm({topics: this.topics});
+
+      this.listenToOnce(eventForm, 'save_success', this.updateEvents);
+
+      $('body').append(eventForm.render());
+    },
+
+    updateEvents: function() {
+      this.fetchEvents(this.topicSelect.currentValue());
     }
 
   });
@@ -62,31 +69,66 @@
     className: 'event-form-container',
 
     events: {
-      'click'  : 'dismiss',
+      'click'  : 'tapped_outside',
       'submit' : 'submit'
     },
 
-    initialize: function() {
-      this.model || (this.model = new AssembleApp.Models.Event());
+    bindings: {
+      '#name' : 'name',
+      '#topic' : 'topic',
+      '#description': 'description',
+      '#url' : 'url',
+      '#address' : 'address'
+    },
+
+    initialize: function(options) {
+      this.topics = options.topics;
+
+      this.model = this.model ? this.model : new AssembleApp.Models.Event();
+
       this.template = Handlebars.compile($('#event-form-template').html());
     },
 
     render: function() {
       var data = this.model.toJSON();
+      data.topics = this.topics.toJSON();
+
       this.$el.html(this.template(data));
+
+      this.stickit();
 
       return this.$el;
     },
 
     submit: function(event){
       event.preventDefault();
+
+      function success(model) {
+        this.trigger('save_success', this.model);
+        this.close();
+      }
+
+      function error(model, response) {
+        this.process_errors(response.responseJSON.errors);
+      }
+      this.model.save({}, {success: success.bind(this), error: error.bind(this)});
     },
 
-    dismiss: function(event) {
-      if(event.target != this.$('form').get(0) && 
-         $(event.target).parent('form').length == 0) {
-        this.$el.remove();
+    process_errors: function(errors) {
+      for(var key in errors) {
+        this.$('#'+key+'.validatable').removeClass('valid').addClass('error');
       }
+    },
+
+    tapped_outside: function(event) {
+      if(event.target != this.$('form').get(0) && 
+         $(event.target).parent('form').length === 0) {
+        this.close();
+      }
+    },
+
+    close: function(){
+      this.$el.remove();
     }
   });
 

@@ -1,6 +1,7 @@
 (function ($) {
 
   AssembleApp.Models.Event = Backbone.MomentifiedModel.extend({
+    url: '/api/events',
     sync: (new AssembleApp.Models.APIRequest()).sync
   });
 
