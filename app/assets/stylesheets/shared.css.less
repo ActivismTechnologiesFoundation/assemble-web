@@ -20,14 +20,18 @@ nav {
   border-bottom: 3px solid white;
 }
 
-input, textarea {
+.input {
   font-size: 15px;
   padding: 5px;
   border-radius: 5px;
   border: 1px solid @gray;
 }
 
+input, textarea {
+  .input;
+}
+
 input {
-  width: 200px;
-  height: 40px;
+  width: @inputWidth;
+  height: @inputHeight;
 }

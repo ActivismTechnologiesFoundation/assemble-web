@@ -38,23 +38,38 @@
 </script>
 
 <script id='topic-select-view-template' type='text/x-handlebars-template'>
-  <h3>Select a Topic</h3>
-  <ul class='options'>
+{{#if collapsable}}
+    
+  <div class='dropdown'><input id='topic' class='validatable' value='{{selected}}' placeholder='Topic of event'/>
+  <span class='arrow'>▼</span>
+  
+{{else}}
+    
+  <div><h3>Select a Topic</h3>
+
+{{/if}}
+
+    <ul class='options'>
+
     {{#each values}}
+
       <li class='option {{classes}}' data-id='{{id}}'>{{name}}</li>
+
     {{/each}}
-  </ul>
+
+    </ul>
+
+  </div>
 </script>
 
 <script id='event-form-template' type='text/x-handlebars-template'>
+  <div id='overlay'></div>
   <form>
     <h3>Submit Event</h3>
 
-    <select id='topic-selector' class='form-control'>
-      {{#each topics}}
-        <option value='{{id}}'>{{name}}</option>
-      {{/each}}
-    </select>
+    <div class="topic-dropdown">
+    </div>
+
     <input id='name' type='text' class='validatable' placeholder='Name of event'/>
     <textarea id='description' type='text' class='validatable' placeholder='Brief description of event'/>
     <input id='url' type='text' class='validatable' placeholder='Website for event'/>

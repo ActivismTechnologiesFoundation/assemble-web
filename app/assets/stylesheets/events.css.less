@@ -101,7 +101,15 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+
+  #overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+  }
 
   form {
     .center-align;
@@ -137,5 +145,30 @@
     :first-child {
       margin-top: 0;
     }
+  }
+
+  .dropdown {
+    position: relative; 
+    height: @inputHeight;
+    .arrow {
+      position: absolute;
+      left: ~"calc(100% - 20px)";
+      top: 15px;
+    }
+  }
+
+  .dropdown ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+
+    padding: 10px;
+    margin: 0;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    width: 100%;
   }
 }
