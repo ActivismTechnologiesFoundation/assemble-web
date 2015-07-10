@@ -1,6 +1,7 @@
 module Api
   module V1
     class EventsController < ApplicationController
+      before_action :convert_timestamps, only: [:create, :update]
 
       def show
         @event = Event.find(params[:id])
@@ -18,8 +19,21 @@ module Api
       end
 
       def create
-        @event = Event.new(event_params)
-        success = @event.save
+        success = false
+        ActiveRecord::Base.transaction do 
+
+          @event = Event.new(event_params)
+                  puts "starts_atstarts_atstarts_atstarts_at #{@event.starts_at}"
+                                    puts "starts_atstarts_atstarts_atstarts_at #{@event.starts_at}"
+
+
+          success = @event.save
+
+          topic = Topic.find(params[:topic_id])
+          @event.topics << topic if success
+
+          raise ActiveRecord::Rollback unless success
+        end
 
         render_event(@event, success)
       end
@@ -34,6 +48,14 @@ module Api
 
       private 
 
+      def convert_timestamps
+        event = params[:event]
+
+        return if event.blank?
+
+        event[:starts_at] = Time.at(event[:starts_at]) unless event[:starts_at].blank?
+      end
+
       def render_event(event, success=true)
         status = success ? :ok : :unprocessable_entity
 
@@ -43,9 +65,10 @@ module Api
       def event_params 
         permitted = [
           :name, 
-          :topic, 
+          :topic_id,
           :description, 
           :url,
+          :address,
           :starts_at, 
           :ends_at
         ]

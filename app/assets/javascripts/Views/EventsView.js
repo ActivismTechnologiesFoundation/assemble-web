@@ -69,16 +69,16 @@
     className: 'event-form-container',
 
     events: {
-      'click #overlay'  : 'tapped_outside',
+      'click #overlay'  : 'dismiss',
       'submit' : 'submit'
     },
 
     bindings: {
       '#name' : 'name',
-      '#topic' : 'topic',
       '#description': 'description',
       '#url' : 'url',
-      '#address' : 'address'
+      '#address' : 'address',
+      '#starts_at': 'starts_at'
     },
 
     initialize: function(options) {
@@ -119,10 +119,19 @@
         this.close();
       }
 
-      function error(model, response) {
+      function error(model, response) { console.log(response.responseJSON);
         this.process_errors(response.responseJSON.errors);
       }
-      this.model.save({}, {success: success.bind(this), error: error.bind(this)});
+
+      var data = {};
+      if(this.topicSelect.currentValue().id) {
+        data.topic_id = this.topicSelect.currentValue().id;
+      }
+
+      this.model.unix_clone().save(data, {
+        success: success.bind(this), 
+        error: error.bind(this)
+      });
     },
 
     process_errors: function(errors) {
@@ -131,15 +140,8 @@
       }
     },
 
-    tapped_outside: function(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      //   console.log($(event.target).parents('form'));
-
-      // if(event.target != this.$('form').get(0) && 
-      //    $(event.target).parents('form', this.$('form')).length === 0) {
-        this.close();
-      // }
+    dismiss: function(event) {
+      this.close();
     },
 
     close: function(){
@@ -193,7 +195,7 @@
 
       if(this.collapsable) {
         this.render();
-        this.toggle();
+        this.toggleDropdown();
       }
     },
 

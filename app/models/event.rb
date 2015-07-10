@@ -2,7 +2,6 @@ class Event < ActiveRecord::Base
   has_and_belongs_to_many :topics
 
   validates :name, presence: true
-  validates :topic, presence: true
   validates :description, presence: true
   validates :address, presence: true
   validates :starts_at, presence: true
@@ -15,4 +14,5 @@ class Event < ActiveRecord::Base
 
     Hash[keys.zip(values)]
   end
+
 end
