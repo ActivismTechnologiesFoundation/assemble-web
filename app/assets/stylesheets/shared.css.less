@@ -4,10 +4,16 @@
 
 html, body {
   background-color: #f7f7f7;
-  height: 100%;
   width: 100%;
+  height: 100%;
   margin: 0;
   .font-default;
+  line-height: 1.1;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
 }
 
 nav {
@@ -18,6 +24,15 @@ nav {
   background-color: @orange;
   color: white;
   border-bottom: 3px solid white;
+
+  .container {
+    height: 100%;
+  }
+  .logo {
+    font-size: 30px;
+    margin-left: -15px;
+    .vertical-align;
+  }
 }
 
 .input {
@@ -34,4 +49,39 @@ input, textarea {
 input {
   width: @inputWidth;
   height: @inputHeight;
+}
+
+#flash-alert {
+  position: fixed; 
+  top: 0;
+  display: none;
+  width: 100%;
+  padding: 20px;
+  color: white;
+  font-size: 15px;
+
+  .text {
+    float: left;
+    .horizontal-align;
+  }
+
+  .close {
+    .vertical-align;
+    position: absolute;
+    left: 95%;
+    padding: 10px;
+    cursor: pointer;;
+  }
+
+  &.danger {
+    background-color: @brand-danger;
+  }
+
+  &.success {
+    background-color: @brand-success;
+  }
+
+  &.warning {
+    background-color: @brand-warning;
+  }
 }

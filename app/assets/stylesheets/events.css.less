@@ -1,8 +1,8 @@
 #events-top-level-view {
+  @blue: blue;
+
   padding-top: @navBarHeight + 20px;
   height: 100%;
-  width: ~"calc(100% - 200px)";
-  max-width: 1080px;
   margin: 0 auto;
 
   .font-default;
@@ -14,9 +14,8 @@
 
   .main {
     width: 80%;
-    height: 100%;
+    padding: 15px;
     float: right;
-    background-color: white;
   }
 
   .side-bar {
@@ -27,8 +26,22 @@
     background-color: white;
   }
 
+  #filter-zipcode {
+    margin-bottom: 10px;
+    input {
+      display: block;
+      height: inherit;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0;
+      color: @blue;
+      outline: none;
+      border: none;
+    }
+  }
 
-  #topic-select h3, #add-event {
+
+  .filter-option, #topic-select h3{
     color: @orange;
     border-bottom: 1px solid @orange;
     font-size: 20px;
@@ -64,14 +77,13 @@
     }
 
     .selected {
-      color: blue;
+      color: @blue;
     }
   }
 
   #events-list {
     margin: 0 auto;
     padding: 0;
-    height: ~"calc(100% - 50px)";
     width: 100%;
     overflow: auto;
     list-style: none;  
@@ -87,6 +99,8 @@
 
   .event-cell {
     padding: 10px;
+    margin: 10px 0;
+    background-color: white;
     color: @gray
   }
 
@@ -118,14 +132,13 @@
     border-radius: 10px;
     background-color: white;
 
-    input, textarea, button, .label {
+    input, textarea, button, .label, .topic-dropdown{
       float: left;
       clear: left;
-      margin-top: 10px;
     }
 
-    input[type='date'] {
-      margin-top: 5px;
+    input, textarea, button, .label {
+      margin-bottom: 12px;
     }
 
     input, textarea {
@@ -134,6 +147,7 @@
 
     textarea {
       resize: none;
+      height: 74px;
     }
 
     button {
@@ -142,12 +156,50 @@
       width: 250px; 
     }
 
-    .error {
-      color: @redError;
+    .label {
+      margin-bottom: 5px;
     }
 
-    :first-child {
-      margin-top: 0;
+    .block {
+      float: left;
+    }
+
+    .info-container {
+      margin-right: 40px;
+    }
+
+    .inline {
+      clear:none;
+    }
+
+    .validatable {
+      &.invalid {
+        border-color: @brand-danger;
+      }
+      &.valid {
+        border-color: @brand-success;
+      }
+    }
+
+    #city, #zipcode {
+      width: 115px;
+    }
+
+    #state{
+      width: 50px;
+      margin-left: 10px;
+      margin-right: 10px;
+
+    }
+
+    .title {
+      text-align: center;
+      padding: 10px;
+      font-size: 20px;
+    }
+
+    .error {
+      color: @brand-danger;
     }
   }
 
@@ -168,11 +220,20 @@
     left: 0;
     list-style: none;
 
-    padding: 10px;
+    padding: 0;
     margin: 0;
     background-color: white;
     border: 1px solid lightgray;
     border-radius: 3px;
     width: 100%;
+  }
+
+  .dropdown ul li {
+    padding: 5px 10px;
+
+    &:hover {
+      background-color: lighten(@orange, 5%);
+      color: white;
+    }
   }
 }

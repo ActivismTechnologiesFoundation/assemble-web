@@ -4,7 +4,8 @@
     el: $('#events-top-level-view'),
 
     events: {
-      'click #add-event': 'showEventForm'
+      'click #add-event': 'showEventForm',
+      'submit #filter-zipcode form': 'filterByZipcode'
     },
 
     initialize: function(options) {
@@ -17,13 +18,13 @@
         type: 'event'
       });
 
-      this.topics = new Backbone.Collection(options.topics);
+      this.topics = options.topics;
       this.topicSelect = new AssembleApp.Views.CustomSelectView({
-        collection: this.topics
+        collection: new Backbone.Collection(this.topics)
       });
-      this.topicSelect.setSelected(this.topics.at(this.topics.length-1));
+      this.topicSelect.setSelected(this.topicSelect.collection.at(this.topics.length-1));
 
-      this.listenTo(this.topicSelect, 'value_changed', this.fetchEvents);
+      this.listenTo(this.topicSelect, 'value_changed', this.topicSelected);
 
       this.render();
 
@@ -45,8 +46,34 @@
       view.setElement(this.$(selector)).render();
     },
 
-    fetchEvents: function(topic) {
-      this.eventsCollection.fetch({data: {topic_id: topic.id}, reset: true});
+    topicSelected: function(topic) {
+      this.fetchEvents({topic: topic});
+    },
+
+    filterByZipcode: function(event) {
+      event.preventDefault();
+
+      var zipcode = this._zipcode();
+      if(zipcode && zipcode.length > 0) {
+        this.fetchEvents({zipcode: zipcode});
+      }
+      else {
+        this.fetchEvents();
+      }
+    },
+
+    fetchEvents: function(options) {
+      options = options || {};
+      var data = {
+        topic_id: (options.topic || this.topicSelect.currentValue()).id,
+        zipcode: options.zipcode || this._zipcode()
+      };
+
+      if(!data.zipcode || data.zipcode.length <= 0) {
+        delete data.zipcode;
+      }
+
+      this.eventsCollection.fetch({data: data, reset: true});
     },
 
     showEventForm: function() {
@@ -58,7 +85,11 @@
     },
 
     updateEvents: function() {
-      this.fetchEvents(this.topicSelect.currentValue());
+      this.fetchEvents();
+    },
+
+    _zipcode: function() {
+      return this.$('#filter-zipcode input').val();
     }
 
   });
@@ -70,19 +101,31 @@
 
     events: {
       'click #overlay'  : 'dismiss',
-      'submit' : 'submit'
+      'submit' : 'submit',
+      'focus input, textarea' : 'inputFocused'
     },
 
     bindings: {
       '#name' : 'name',
       '#description': 'description',
       '#url' : 'url',
-      '#address' : 'address',
-      '#starts_at': 'starts_at'
+      '#line1' : 'line1',
+      '#line2' : 'line2',
+      '#city'  : '#city',
+      '#state' : '#state',
+      '#zipcode' : 'zipcode',
+      '#starts_at': {
+        observe: 'starts_at',
+        onSet: 'momentify'
+      }
+    },
+
+    momentify: function(value) {
+      return this.model.to_moment(value);
     },
 
     initialize: function(options) {
-      this.topics = options.topics;
+      this.topics = new Backbone.Collection(options.topics);
 
       this.model = this.model ? this.model : new AssembleApp.Models.Event();
 
@@ -119,14 +162,18 @@
         this.close();
       }
 
-      function error(model, response) { console.log(response.responseJSON);
+      function error(model, response) {
         this.process_errors(response.responseJSON.errors);
       }
 
       var data = {};
       if(this.topicSelect.currentValue().id) {
-        data.topic_id = this.topicSelect.currentValue().id;
+        data.topic = this.topicSelect.currentValue().toJSON();
       }
+
+      data.address = _.map(['#line1', '#line2', '#city', '#state', '#zipcode'], function(id) {
+        return this.$(id).val();
+      }.bind(this)).join(',');
 
       this.model.unix_clone().save(data, {
         success: success.bind(this), 
@@ -136,8 +183,13 @@
 
     process_errors: function(errors) {
       for(var key in errors) {
-        this.$('#'+key+'.validatable').removeClass('valid').addClass('error');
+        this.$('#'+key+'.validatable').removeClass('valid').addClass('invalid');
       }
+    },
+
+    inputFocused: function(event) {
+      var $input = $(event.currentTarget);
+      $input.removeClass('invalid');
     },
 
     dismiss: function(event) {
@@ -218,7 +270,7 @@
     },
 
     currentValue: function() {
-      return this.selectedValue || new Backbone.Model({name: 'Topic of event'});
+      return this.selectedValue || new Backbone.Model();
     },
   });
 

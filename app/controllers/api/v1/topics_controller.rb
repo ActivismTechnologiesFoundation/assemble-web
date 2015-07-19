@@ -1,6 +1,6 @@
 module Api
   module V1
-    class TopicsController < ApplicationController
+    class TopicsController < BaseController
     	def index
     		@topics = Topic.all
     		render json: @topics

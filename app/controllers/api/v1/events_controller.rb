@@ -1,6 +1,6 @@
 module Api
   module V1
-    class EventsController < ApplicationController
+    class EventsController < BaseController
       before_action :convert_timestamps, only: [:create, :update]
 
       def show
@@ -9,13 +9,7 @@ module Api
       end
 
       def index
-        topic_id = params[:topic_id].to_i
-
-        @events = if topic_id && topic_id > 0
-          Topic.find(topic_id).events.order(created_at: :desc).limit(10)
-        else
-          Event.order(created_at: :desc).limit(10)
-        end
+        @events = Event.filter(filter_params)
       end
 
       def create
@@ -23,16 +17,8 @@ module Api
         ActiveRecord::Base.transaction do 
 
           @event = Event.new(event_params)
-                  puts "starts_atstarts_atstarts_atstarts_at #{@event.starts_at}"
-                                    puts "starts_atstarts_atstarts_atstarts_at #{@event.starts_at}"
 
-
-          success = @event.save
-
-          topic = Topic.find(params[:topic_id])
-          @event.topics << topic if success
-
-          raise ActiveRecord::Rollback unless success
+          raise ActiveRecord::Rollback unless success = @event.save
         end
 
         render_event(@event, success)
@@ -62,17 +48,28 @@ module Api
         render template: "api/v1/events/show", locals: { event: event }, status: status
       end
 
-      def event_params 
+      def filter_params
         permitted = [
-          :name, 
           :topic_id,
+          :zipcode
+        ]
+        params.permit(permitted)
+      end
+
+      def event_params 
+
+        params.require(:event).permit(
+          :name, 
           :description, 
           :url,
           :address,
+          :zipcode,
           :starts_at, 
-          :ends_at
-        ]
-        params.require(:event).permit(permitted)
+          :ends_at,
+          topic: [
+            :id
+          ]
+        )
       end
     end
   end

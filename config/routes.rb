@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       post 'events' => 'events#create'
       put 'events' => 'events#update'
       get 'events' => 'events#index'
+
+      get 'zipcodes/validate' => 'zipcodes#validate'
     end
   end
 end

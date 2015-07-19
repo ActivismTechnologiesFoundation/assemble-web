@@ -3,10 +3,10 @@
 
     Backbone.MomentifiedModel = Backbone.Model.extend({
         constructor: function (attributes, options) {
-            attributes || (attributes = {});
-            options || (options = {});
+            attributes = attributes || {};
+            options = options || {};
 
-            this.format || (this.format = options.format);
+            this.format = options.format || this.format;
 
             this.momentify_attributes(attributes);
 
@@ -19,13 +19,14 @@
             var attrs = !!a ? a : this.attributes;
             this._enumerate_time_attributes(function(key, value, attributes) {
                 if(!moment.isMoment(value)) {
-                    if(this.format == "unix") {
-                        attributes[key] = moment.unix(attributes[key]);
-                    } else {
-                        attributes[key] = moment(attributes[key]);
-                    }
+
+                    attributes[key] = this.to_moment(value, this.format == "unix");
                 }
             }.bind(this), attrs);
+        },
+
+        to_moment: function(value, unix) {
+            return unix ? moment.unix(value) : moment(value); 
         },
 
         unix_clone: function() {

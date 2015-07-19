@@ -4,7 +4,7 @@
     el: $("#landing-top-level-view"),
 
     events: {
-      'click .get-started' : 'navigateToEvents'
+      'submit .zipcode-form' : 'navigateToEvents'
     },
 
     initialize: function(options) {
@@ -19,7 +19,21 @@
 
     navigateToEvents: function(event) {
       event.preventDefault();
-      window.location.assign("/events");
+
+      var zipcode = this.$('.zipcode-form input').val();
+      superagent
+        .get('/api/zipcodes/validate')
+        .query({zipcode: zipcode })
+        .end(function(error, response){
+          if(!error && response.body.valid) {
+            window.location.assign("/events");
+          }
+          else {
+            AssembleApp.Views.FlashView.showError(
+              "Unfortunately we haven't reached your area yet."
+            );
+          }
+        });
     }
 
   });
