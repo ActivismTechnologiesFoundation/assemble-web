@@ -15,7 +15,8 @@
       this.eventsListView = new AssembleApp.Views.ListView({
         collection: this.eventsCollection,
         view: AssembleApp.Views.EventListCellView,
-        type: 'event'
+        type: 'event',
+        infinite_scroll_bottom: true
       });
 
       this.topics = options.topics;
@@ -85,6 +86,7 @@
     },
 
     updateEvents: function() {
+      this.eventsListView.reset_page();
       this.fetchEvents();
     },
 

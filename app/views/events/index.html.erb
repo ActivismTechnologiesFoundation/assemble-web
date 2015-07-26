@@ -50,7 +50,7 @@
   
 {{else}}
     
-  <div><h3>Select a Topic</h3>
+  <h3>Select a Topic</h3>
 
 {{/if}}
 
@@ -64,7 +64,11 @@
 
     </ul>
 
-  </div>
+  {{#if collapsable}}
+
+    </div>
+
+  {{/if}}
 </script>
 
 <script id='event-form-template' type='text/x-handlebars-template'>

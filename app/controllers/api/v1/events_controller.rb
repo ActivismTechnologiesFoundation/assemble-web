@@ -51,7 +51,8 @@ module Api
       def filter_params
         permitted = [
           :topic_id,
-          :zipcode
+          :zipcode,
+          :page
         ]
         params.permit(permitted)
       end

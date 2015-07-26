@@ -20,20 +20,25 @@ class Event < ActiveRecord::Base
   def self.filter(params)
     topic_id = params[:topic_id].to_i
     zipcode = params[:zipcode]
+    @events = nil
 
+    # Filter topic
     @events = if topic_id && topic_id > 0
-      Topic.find(topic_id).events.order(created_at: :desc).limit(10)
+      Topic.find(topic_id).events.order(created_at: :desc)
     else
-      Event.order(created_at: :desc).limit(10)
+      Event.order(created_at: :desc)
     end
 
-    return @events if zipcode.blank?
-
-    @events = if @events.nil? 
+    # Filter zipcode
+    @events = if @events.nil? && !zipcode.blank?
       Event.where(zipcode: zipcode)
-    else
+    elsif !zipcode.blank?
       @events.where(zipcode: zipcode)
+    else
+      @events
     end
+
+    @events.page(params[:page] || 1).per(10)
   end
 
   def topic_filter(topic_id, query=nil)
@@ -153,7 +158,6 @@ class Event < ActiveRecord::Base
     topics = []
     topics = csv_row.to_hash.select{|k| k =~ /native_categories/}.values
     topics.map!{ |n|  Topic.where(name: n.strip).first }.delete_if{|t| t.blank? }
-    puts topics
     topics
   end
 

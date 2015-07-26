@@ -14,16 +14,22 @@
 
   .main {
     width: 80%;
+    height: 100%;
     padding: 15px;
     float: right;
   }
 
   .side-bar {
     width: ~"calc(20% - 10px)";
+    height: 100%;
     margin-right: 10px;
     height: 100%;
     float: left;
     background-color: white;
+  }
+
+  #filter-controls {
+    height: 100%;
   }
 
   #filter-zipcode {
@@ -60,8 +66,11 @@
 
   #topic-select {
     color: @orange;
+    height: 82%;
 
     ul {
+      height: 100%;
+      overflow: auto;
       list-style: none;
       padding: 0px 8px;
       margin: 0;
@@ -85,6 +94,7 @@
     margin: 0 auto;
     padding: 0;
     width: 100%;
+    height: 100%;
     overflow: auto;
     list-style: none;  
   }

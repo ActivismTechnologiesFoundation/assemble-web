@@ -87,6 +87,10 @@
       }
     },
 
+    reset_page: function() {
+      this.collection.page = 2;
+    },
+
     fetch_more_data: function(){
       if(_.isFunction(this.collection.fetch_next_page)) {
         if(!this.collection.isLoading) {
