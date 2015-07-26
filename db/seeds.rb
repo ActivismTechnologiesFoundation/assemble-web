@@ -3,7 +3,29 @@
 
 ApiKey.find_or_create_by!(app_id: "web_app_id")
 
-topics = ['social', 'environment', 'gender', 'race', 'animals', 'science', 'business']
+topics = [
+  'Abortion',
+  'Race',
+  'Civil Liberties',
+  'Environment',
+  'War & Peace',
+  'Crime & Punishment',
+  'Immigration',
+  'Gender',
+  'LGBTQ',
+  'Economics',
+  'Guns',
+  'Animal Rights',
+  'Health Care',
+  'Corruption',
+  'Electoral Reform',
+  'Religion',
+  'Science & Technology',
+  'Education',
+  'Veterans',
+  'Human Rights',
+  'Arts & Culture'
+]
 topics.each { |t| Topic.create!(name: t) }
 
 (1..100).each do 
@@ -23,6 +45,4 @@ topics.each { |t| Topic.create!(name: t) }
     topic: Topic.find_by(name: topics[rand(topics.count)]).as_json(only: :id)
 
   )
-
-  Zipcode.create!(value: 'test_zipcode')
 end
