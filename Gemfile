@@ -29,6 +29,8 @@ gem 'kaminari'
 
 gem 'faker'
 
+gem 'geocoder'
+
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.0'
   gem 'guard-rspec'
