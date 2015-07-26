@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20150726080718) do
 
   create_table "events", force: true do |t|
     t.string   "name"
-    t.string   "topic"
     t.text     "description"
     t.string   "address"
     t.string   "url"
@@ -53,5 +52,7 @@ ActiveRecord::Schema.define(version: 20150726080718) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "zipcodes", ["value"], name: "index_zipcodes_on_value", unique: true, using: :btree
 
 end

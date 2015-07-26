@@ -5,5 +5,7 @@ class CreateZipcodes < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :zipcodes, :value, :unique => true
   end
 end
