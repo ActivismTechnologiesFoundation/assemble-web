@@ -16,6 +16,7 @@ class Event < ActiveRecord::Base
 
   after_save :ensure_topic_link
   after_save :ensure_zipcode
+  
 
   def self.filter(params)
     topic_id = params[:topic_id].to_i

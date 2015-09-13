@@ -15,7 +15,6 @@ module Api
       def create
         success = false
         ActiveRecord::Base.transaction do 
-
           @event = Event.new(event_params)
 
           raise ActiveRecord::Rollback unless success = @event.save
@@ -35,11 +34,8 @@ module Api
       private 
 
       def convert_timestamps
-        event = params[:event]
-
-        return if event.blank?
-
-        event[:starts_at] = Time.at(event[:starts_at]) unless event[:starts_at].blank?
+        params[:starts_at] = Time.at(params[:starts_at]) if !!params[:starts_at]
+        params[:ends_at] = Time.at(params[:ends_at]) if !!params[:ends_at]
       end
 
       def render_event(event, success=true)
@@ -59,7 +55,7 @@ module Api
 
       def event_params 
 
-        params.require(:event).permit(
+        params.permit(
           :name, 
           :description, 
           :url,
