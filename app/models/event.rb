@@ -113,7 +113,7 @@ class Event < ActiveRecord::Base
     attrs[:ends_at] = dates[:ends_at]
 
     #address
-    address = [:street_address, :city, :state].map{|k| row_hash[k].to_s }.join(',')
+    address = [:street_address, :line_2, :city, :state].map{|k| row_hash[k].to_s }.join(',')
     geocode = Geocoder.search(address).first
     attrs[:zipcode] = geocode.postal_code
     attrs[:zipcode] = defaults[:zipcode] if row_hash[:street_address].blank?
