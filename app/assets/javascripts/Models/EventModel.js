@@ -11,6 +11,20 @@
 
     url: '/api/events',
 
+    comparator: function (eventA, eventB) {
+        var a = eventA.get("starts_at"),
+            b = eventB.get("starts_at");
+
+        if (a.isBefore(b)) {
+          return -1;
+        }else if (a.isAfter(b)) {
+          return 1;
+        }else{
+          return 0;
+        }
+    },
+    
     sync: (new AssembleApp.Models.APIRequest()).sync
+
   });
 })(jQuery);
