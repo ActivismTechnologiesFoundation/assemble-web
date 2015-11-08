@@ -23,7 +23,7 @@
       this.topicSelect = new AssembleApp.Views.CustomSelectView({
         collection: new Backbone.Collection(this.topics)
       });
-      this.topicSelect.setSelected(this.topicSelect.collection.at(this.topics.length-1));
+      this.topicSelect.setSelected(this.topicSelect.collection.at(0));
 
       this.listenTo(this.topicSelect, 'value_changed', this.topicSelected);
 

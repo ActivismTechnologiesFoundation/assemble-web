@@ -2,8 +2,7 @@ module Api
   module V1
     class TopicsController < BaseController
     	def index
-    		@topics = Topic.all
-    		render json: @topics
+    		render json: Topic.all_topics
     	end
     end
   end
