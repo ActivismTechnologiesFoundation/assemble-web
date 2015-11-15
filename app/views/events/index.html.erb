@@ -3,6 +3,8 @@
 <div class='container' id='events-top-level-view'>
 </div>
 
+<%= render 'shared/footer' %>
+
 <% content_for :javascripts do %>
   AssembleApp.Data.Events = {
     topics: <%= @topics.to_json.html_safe %>

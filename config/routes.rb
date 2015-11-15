@@ -4,8 +4,15 @@ require 'api_constraints'
 Rails.application.routes.draw do
 
   root 'static_pages#landing_page'
+  
+  get 'contact'           => 'static_pages#contact'
+  get 'about'             => 'static_pages#about'
+  get 'terms-of-service'  => 'static_pages#terms_of_service'
+  get 'privacy-policy'    => 'static_pages#privacy_policy'
+  get 'contact'           => 'static_pgaes#contact'
 
   get 'events' => 'events#index'
+
 
 #######################################################
   # Uncomment block to restrict access to admins 
