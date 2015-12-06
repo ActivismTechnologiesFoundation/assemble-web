@@ -34,7 +34,6 @@ AssembleApp.Views.PlacesAutoCompleteView = Backbone.View.extend({
             state = '', 
             zipcode = [];
 
-            console.log(place);
         place.address_components.forEach(function(component) {
             if(component.types.join(" ").indexOf('street_number') > -1) {
                 street.push(component.short_name);
@@ -57,7 +56,9 @@ AssembleApp.Views.PlacesAutoCompleteView = Backbone.View.extend({
             street: street.join(' '), 
             city: city, 
             state: state, 
-            zipcode: zipcode.join('-')
+            zipcode: zipcode.join('-'),
+            latitude: place.geometry.location.lat(),
+            longitude: place.geometry.location.lng()
         });
 
         this.trigger('address_chosen', this.model.get('chosen_address'));

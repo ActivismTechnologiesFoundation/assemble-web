@@ -197,6 +197,9 @@
         return address[k] || '';
       }).join(',');
 
+      data.latitude = address.latitude;
+      data.longitude = address.longitude;
+
       this.model.unix_clone().save(data, {
         success: success.bind(this), 
         error: error.bind(this)
@@ -204,8 +207,6 @@
     },
 
     process_errors: function(errors) {
-      console.log(errors); 
-
       for(var key in errors) {
         this.$('#'+key+'.validatable').removeClass('valid').addClass('invalid');
       }

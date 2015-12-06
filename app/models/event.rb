@@ -8,6 +8,8 @@ class Event < ActiveRecord::Base
   validates :description, presence: true
   validates :address, presence: true
   validates :starts_at, presence: true
+  validates :latitude, presence: true
+  validates :longitude, presence: true
 
   attr_accessor :topic, :skip_topic_validation
 

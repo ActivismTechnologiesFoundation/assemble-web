@@ -60,7 +60,8 @@ module Api
           :description, 
           :url,
           :address,
-          :zipcode,
+          :latitude, 
+          :longitude,
           :starts_at, 
           :ends_at,
           topic: [
