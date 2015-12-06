@@ -94,14 +94,19 @@
     </div>
 
     <div class='logistics-container block'>
-      <div class='label address'>Address of event</div>
-      <input id='line1' type='text' class='validatable' placeholder='Line 1' />
-      <input id='line2' type='text' class='validatable' placeholder='Line 2' />
-      <input id='city' type='text' class='validatable' placeholder='City' />
-      <input id='state' type='text' class='validatable inline' maxlength='2' placeholder='State' />
-      <input id='zipcode' type='text' class='validatable inline' placeholder='Zip', maxlength='5' />
+      {{#if address}}
+        <div class='label address'>Address of event <span><a class='address-toggle clickable'>change</a></span></div>
 
-    
+        <div class='address-container'>
+          <div class='street'><span>{{address.street}}</span></div>
+          <div class='city-state-zip'><span>{{address.city}}</span>, <span>{{address.state}}</span> <span>{{address.zipcode}}</span></div>
+        </div>
+      {{else}}
+        <div class='label address'>Address of event</div>
+        <div class='autocomplete-address'>
+        </div>
+      {{/if}}
+
       <div class='label start-date'>Starts on</div>
       <input id='starts_at' type='date' class='validatable'/>
       
@@ -113,3 +118,5 @@
     <button type='submit' class='block'>Submit</button>
   </form>
 </script>
+
+<%= render 'places_autocomplete_view' %>

@@ -1,6 +1,4 @@
 #events-top-level-view {
-  @blue: blue;
-
   padding-top: @navBarHeight + 20px;
   height: 95%;
   margin: 0 auto;
@@ -129,6 +127,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  height: 100%;
 
   #overlay {
     position: absolute;
@@ -146,12 +145,12 @@
     border-radius: 10px;
     background-color: white;
 
-    input, textarea, button, .label, .topic-dropdown{
+    input, textarea, button, .label, .topic-dropdown, .address-container{
       float: left;
       clear: left;
     }
 
-    input, textarea, button, .label {
+    input, textarea, button, .label, .address-container {
       margin-bottom: 12px;
     }
 
@@ -184,6 +183,10 @@
 
     .inline {
       clear:none;
+    }
+
+    .address-container {
+      .font-default(15px);
     }
 
     .validatable {

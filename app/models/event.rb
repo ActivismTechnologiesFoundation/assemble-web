@@ -7,7 +7,6 @@ class Event < ActiveRecord::Base
   validates :name, presence: true
   validates :description, presence: true
   validates :address, presence: true
-  validates :zipcode, presence: true
   validates :starts_at, presence: true
 
   attr_accessor :topic, :skip_topic_validation

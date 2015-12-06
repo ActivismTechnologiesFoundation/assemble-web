@@ -104,7 +104,8 @@
     events: {
       'click #overlay'  : 'dismiss',
       'submit' : 'submit',
-      'focus input, textarea' : 'inputFocused'
+      'focus input, textarea' : 'inputFocused',
+      'click .address-toggle': 'unsetAddress'
     },
 
     bindings: {
@@ -137,6 +138,9 @@
         collection: this.topics, 
         collapsable: true
       });
+
+      this.autocompleteAddressView = new AssembleApp.Views.PlacesAutoCompleteView();
+      this.listenTo(this.autocompleteAddressView, 'address_chosen', this.setAddress);
     },
 
     render: function() {
@@ -147,6 +151,10 @@
 
       this.assign(this.topicSelect, '.topic-dropdown');
 
+      if (!this.model.has('address')) {
+        this.assign(this.autocompleteAddressView, '.autocomplete-address');
+      }
+
       this.stickit();
 
       return this.$el;
@@ -154,6 +162,16 @@
 
     assign: function(view, selector) {
       view.setElement(this.$(selector)).render();
+    },
+
+    setAddress: function(address) {
+      this.model.set('address', address);
+      this.render();
+    },
+
+    unsetAddress: function() {
+      this.model.set('address', null);
+      this.render();
     },
 
     submit: function(event){
@@ -168,14 +186,16 @@
         this.process_errors(response.responseJSON.errors);
       }
 
-      var data = {};
+      var data = {},
+          address = this.model.get('address') || {};
+
       if(this.topicSelect.currentValue().id) {
         data.topic = this.topicSelect.currentValue().toJSON();
       }
 
-      data.address = _.map(['#line1', '#line2', '#city', '#state', '#zipcode'], function(id) {
-        return this.$(id).val();
-      }.bind(this)).join(',');
+      data.address = _.map(['street', 'line2', 'city', 'state', 'zipcode'], function(k) {
+        return address[k] || '';
+      }).join(',');
 
       this.model.unix_clone().save(data, {
         success: success.bind(this), 
@@ -184,6 +204,8 @@
     },
 
     process_errors: function(errors) {
+      console.log(errors); 
+
       for(var key in errors) {
         this.$('#'+key+'.validatable').removeClass('valid').addClass('invalid');
       }
