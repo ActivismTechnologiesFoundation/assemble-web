@@ -45,4 +45,4 @@ topics.each { |t| Topic.create!(name: t) }
 #     topic: Topic.find_by(name: topics[rand(topics.count)]).as_json(only: :id)
 
 #   )
-end
+# end

@@ -47,8 +47,11 @@ module Api
       def filter_params
         permitted = [
           :topic_id,
-          :zipcode,
-          :page
+          :page,
+          location: [
+            :latitude,
+            :longitude
+          ]
         ]
         params.permit(permitted)
       end
@@ -60,7 +63,7 @@ module Api
           :description, 
           :url,
           :address,
-          :latitude, 
+          :latitude,
           :longitude,
           :starts_at, 
           :ends_at,

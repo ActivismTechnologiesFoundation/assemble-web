@@ -8,20 +8,36 @@ class Event < ActiveRecord::Base
   validates :description, presence: true
   validates :address, presence: true
   validates :starts_at, presence: true
-  validates :latitude, presence: true
-  validates :longitude, presence: true
 
   attr_accessor :topic, :skip_topic_validation
 
   ADDRESS_KEYS = [:line1, :line2, :city, :state, :zipcode]
+  METERS_PER_MILE = 1609.34
+  DEFAULT_MILE_RADIUS = 100
+
+  geocoded_by :address_string
+  after_validation :geocode, if: lambda { |event| event.latitude.blank? || event.longitude.blank? }   
 
   after_save :ensure_topic_link
-  after_save :ensure_zipcode
-  
+
+  scope :near, lambda { |lat, long, miles| 
+    meters = miles * METERS_PER_MILE
+
+    subq = select("*, #{earth_distance_sql(lat,long)} AS distance")
+
+    from("(#{subq.to_sql}) as events")
+    .where("events.distance <= #{meters}")
+    .order('events.distance')
+    .select('*')
+  }
+
+  def self.earth_distance_sql(lat, long)
+    "earth_distance(ll_to_earth(#{lat}, #{long}), ll_to_earth(events.latitude, events.longitude))"
+  end
 
   def self.filter(params)
     topic_id = params[:topic_id].to_i
-    zipcode = params[:zipcode]
+    location = params[:location]
     @events = nil
 
     # Filter topic
@@ -31,11 +47,11 @@ class Event < ActiveRecord::Base
       Event.order(created_at: :desc)
     end
 
-    # Filter zipcode
-    @events = if @events.nil? && !zipcode.blank?
-      Event.where(zipcode: zipcode)
-    elsif !zipcode.blank?
-      @events.where(zipcode: zipcode)
+    # Filter location
+    @events = if @events.nil? && !location.blank?
+      Event.near(location[:latitude], location[:longitude], params[:mile_radius] || DEFAULT_MILE_RADIUS)
+    elsif !location.blank?
+      @events.near(location[:latitude], location[:longitude], params[:mile_radius] || DEFAULT_MILE_RADIUS)
     else
       @events
     end
@@ -58,19 +74,14 @@ class Event < ActiveRecord::Base
     Hash[keys.zip(values)]
   end
 
+  def address_string
+    read_attribute(:address)
+  end
+
   def ensure_topic_link
     if self.topic
       topic = Topic.where(id: self.topic['id']).first
       self.topics << topic unless topic.blank?
-    end
-  end
-
-  def ensure_zipcode
-    if self.zipcode 
-      begin 
-        Zipcode.create!(value: self.zipcode.to_s) unless Zipcode.exists?(value: self.zipcode.to_s)
-      rescue ActiveRecord::RecordNotUnique => e
-      end
     end
   end
 

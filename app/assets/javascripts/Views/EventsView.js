@@ -5,7 +5,7 @@
 
     events: {
       'click #add-event': 'showEventForm',
-      'submit #filter-zipcode form': 'filterByZipcode'
+      'keyup #filter-address input': 'clearLocation'
     },
 
     initialize: function(options) {
@@ -25,6 +25,9 @@
       });
       this.topicSelect.setSelected(this.topicSelect.collection.at(0));
 
+      this.autocompleteAddressView = new AssembleApp.Views.PlacesAutoCompleteView();
+      this.listenTo(this.autocompleteAddressView, 'address_chosen', this.filterByAddress);
+
       this.listenTo(this.topicSelect, 'value_changed', this.topicSelected);
 
       this.render();
@@ -37,6 +40,7 @@
 
       this.$el.html(this.template(data));
 
+      this.assign(this.autocompleteAddressView, '#filter-address');
       this.assign(this.topicSelect, '#topic-select');
       this.assign(this.eventsListView, '#events-list');
 
@@ -51,23 +55,25 @@
       this.fetchEvents({topic: topic});
     },
 
-    filterByZipcode: function(event) {
-      event.preventDefault();
-
-      var zipcode = this._zipcode();
-      if(zipcode && zipcode.length > 0) {
-        this.fetchEvents({zipcode: zipcode});
-      }
-      else {
+    clearLocation: function(event) {
+      if($(event.currentTarget).val().length <= 0) {
+        this.location = null;
         this.fetchEvents();
       }
+    },
+
+    filterByAddress: function(address) {
+      this.location = { latitude: address.latitude, longitude: address.longitude };
+
+      this.fetchEvents({ location: address });
+
     },
 
     fetchEvents: function(options) {
       options = options || {};
       var data = {
         topic_id: (options.topic || this.topicSelect.currentValue()).id,
-        zipcode: options.zipcode || this._zipcode()
+        location: options.location
       };
 
       if(!data.zipcode || data.zipcode.length <= 0) {
@@ -92,6 +98,19 @@
 
     _zipcode: function() {
       return this.$('#filter-zipcode input').val();
+    },
+
+    geocode: function(address, callback) {
+      this.geocoder.geocode({address: address}, function(results, status) {
+        var success = status == google.maps.GeocoderStatus.OK,
+            location;
+
+        if (success) {
+          location = results[0].geometry.location;
+        }
+
+        callback(success, location);
+      });
     }
 
   });
