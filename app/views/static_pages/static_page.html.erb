@@ -1,0 +1,10 @@
+<%= render 'shared/nav', { href: events_path.to_s } %>
+
+<div class="container static-page <%= @page %>">
+  <h1 class='title'><%= "#{@page.split('_').map(&:capitalize).join(' ')}" %></h1>
+  <div class='content'>
+    <%= render "#{@page}" %>
+  </div>
+</div>
+
+<%= render 'shared/footer' %>

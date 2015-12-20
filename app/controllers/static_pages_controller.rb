@@ -3,18 +3,25 @@ class StaticPagesController < ApplicationController
   end
 
   def about
-    redirect_to events_path
+    @page = 'about'
+    render :static_page
   end
 
   def terms_of_service
-    redirect_to events_path
+    @page = 'terms_of_service'
+
+    render :static_page
   end
 
   def privacy_policy
-    redirect_to events_path
+    @page = 'privacy_policy'
+
+    render :static_page
   end
 
   def contact
-    redirect_to events_path
+    @page = 'contact'
+
+    render :static_page
   end
 end

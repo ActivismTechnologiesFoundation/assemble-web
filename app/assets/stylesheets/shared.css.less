@@ -22,11 +22,14 @@ nav {
   width: 100%;
   height: @navBarHeight;
   background-color: @orange;
-  color: white;
+  color: @white;
   border-bottom: 3px solid white;
 
   .container {
+    display: block;
     height: 100%;
+    color: @white;
+    text-decoration: none;
   }
   .logo {
     font-size: 30px;
@@ -51,6 +54,11 @@ footer {
       padding: 5px;
     }
   }
+}
+
+ul {
+  list-style: none;
+  padding: 0;
 }
 
 .input {
