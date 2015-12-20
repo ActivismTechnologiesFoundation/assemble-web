@@ -8,19 +8,19 @@
 
             this.format = options.format || this.format;
 
-            this.momentify_attributes(attributes);
+            this.momentify_attributes({ attributes: attributes });
 
             arguments[0] = attributes;
             
             Backbone.Model.prototype.constructor.apply(this, arguments);
         }, 
 
-        momentify_attributes: function(a){
-            var attrs = !!a ? a : this.attributes;
+        momentify_attributes: function(options){
+            var attrs = !!options.attributes ? options.attributes : this.attributes;
             this._enumerate_time_attributes(function(key, value, attributes) {
                 if(!moment.isMoment(value)) {
 
-                    attributes[key] = this.to_moment(value, this.format == "unix");
+                    attributes[key] = this.to_moment(value, (options.format || this.format) == "unix");
                 }
             }.bind(this), attrs);
         },

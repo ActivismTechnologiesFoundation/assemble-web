@@ -111,6 +111,14 @@
 
         callback(success, location);
       });
+    },
+
+    show_static_page: function(event) {
+      event.preventDefault();
+
+      console.log($(event.currentTarget).attr('href'));
+
+
     }
 
   });
@@ -121,7 +129,7 @@
     className: 'event-form-container',
 
     events: {
-      'click #overlay'  : 'dismiss',
+      'click #overlay, .close-x'  : 'dismiss',
       'submit' : 'submit',
       'focus input, textarea' : 'inputFocused',
       'click .address-toggle': 'unsetAddress'
@@ -136,14 +144,8 @@
       '#city'  : '#city',
       '#state' : '#state',
       '#zipcode' : 'zipcode',
-      '#starts_at': {
-        observe: 'starts_at',
-        onSet: 'momentify'
-      }
-    },
-
-    momentify: function(value) {
-      return this.model.to_moment(value);
+      '#starts_at': 'starts_at',
+      '#ends_at': 'ends_at'
     },
 
     initialize: function(options) {
@@ -160,6 +162,8 @@
 
       this.autocompleteAddressView = new AssembleApp.Views.PlacesAutoCompleteView();
       this.listenTo(this.autocompleteAddressView, 'address_chosen', this.setAddress);
+
+      Backbone.Validation.bind(this);
     },
 
     render: function() {
@@ -195,6 +199,13 @@
 
     submit: function(event){
       event.preventDefault();
+
+      if(!this.model.isValid()) {
+        return;
+      }
+      else {
+        this.model.momentify_attributes({format: 'string'});
+      }
 
       function success(model) {
         this.trigger('save_success', this.model);

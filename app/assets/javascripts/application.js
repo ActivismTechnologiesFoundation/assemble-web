@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require ./lib/underscore-min.js
 //= require_tree ./lib/
+//= require ./backbone.validation.extensions.js
 //= require ./Models/MomentifiedModel.js
 //= require ./Models/LoadableModel.js
 //= require_directory ./Models

@@ -2,7 +2,21 @@
 
   AssembleApp.Models.Event = Backbone.MomentifiedModel.extend({
     url: '/api/events',
+    
     format: 'unix',
+
+    validation: {
+      starts_at: { 
+        required: true,
+        pattern: 'date_mm_dd_yyyy'
+      },
+
+      ends_at: {
+        required: false,
+        pattern: 'date_mm_dd_yyyy'
+      }
+    },
+
     sync: (new AssembleApp.Models.APIRequest()).sync
   });
 
