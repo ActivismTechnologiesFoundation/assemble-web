@@ -25,7 +25,9 @@
       });
       this.topicSelect.setSelected(this.topicSelect.collection.at(0));
 
-      this.autocompleteAddressView = new AssembleApp.Views.PlacesAutoCompleteView();
+      this.autocompleteAddressView = new AssembleApp.Views.PlacesAutoCompleteView({
+        placeholder: 'Filter by address'
+      });
       this.listenTo(this.autocompleteAddressView, 'address_chosen', this.filterByAddress);
 
       this.listenTo(this.topicSelect, 'value_changed', this.topicSelected);
@@ -144,8 +146,18 @@
       '#city'  : '#city',
       '#state' : '#state',
       '#zipcode' : 'zipcode',
-      '#starts_at': 'starts_at',
-      '#ends_at': 'ends_at'
+      '#starts_at': {
+        observe: 'starts_at',
+        onSet: 'momentify'
+      },
+      '#ends_at': {
+        observe: 'ends_at',
+        onSet: 'momentify'
+      }
+    },
+
+    momentify: function(value) {
+      return this.model.to_moment(value);
     },
 
     initialize: function(options) {
@@ -203,9 +215,6 @@
       if(!this.model.isValid()) {
         return;
       }
-      else {
-        this.model.momentify_attributes({format: 'string'});
-      }
 
       function success(model) {
         this.trigger('save_success', this.model);
@@ -230,10 +239,12 @@
       data.latitude = address.latitude;
       data.longitude = address.longitude;
 
-      this.model.unix_clone().save(data, {
-        success: success.bind(this), 
-        error: error.bind(this)
-      });
+      this.model
+          .unix_clone()
+          .save(data, {
+            success: success.bind(this), 
+            error: error.bind(this)
+          });
     },
 
     process_errors: function(errors) {

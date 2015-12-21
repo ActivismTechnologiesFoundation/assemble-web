@@ -10,7 +10,21 @@
 
     _.extend(Backbone.Validation.attributeLoaders, {
         validatable: function(view) {
-            return _.map(view.$('input.validatable'), function(input) { return input.getAttribute('id'); } );
+            return _.map(view.$('input.validatable'), function(input) { 
+                return input.getAttribute('id'); 
+            } );
+        }
+    });
+
+    _.extend(Backbone.Validation.validators, {
+        valid_date: function(value, attr, customValue, model) {
+            if (value && value.isBefore(moment())) {
+                return "Date can't be in the past";
+            }
+            else if (value) {
+                var fn = Backbone.Validation.validators.pattern;
+                return fn(value.format('MM/DD/YYYY'), attr, 'date_mm_dd_yyyy', model);
+            }
         }
     });
 

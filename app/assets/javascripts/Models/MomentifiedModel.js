@@ -23,6 +23,8 @@
                     attributes[key] = this.to_moment(value, (options.format || this.format) == "unix");
                 }
             }.bind(this), attrs);
+
+            return this;
         },
 
         to_moment: function(value, unix) {

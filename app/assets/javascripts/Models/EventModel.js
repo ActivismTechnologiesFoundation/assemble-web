@@ -8,12 +8,12 @@
     validation: {
       starts_at: { 
         required: true,
-        pattern: 'date_mm_dd_yyyy'
+        valid_date: true
       },
 
       ends_at: {
         required: false,
-        pattern: 'date_mm_dd_yyyy'
+        valid_date: true
       }
     },
 
