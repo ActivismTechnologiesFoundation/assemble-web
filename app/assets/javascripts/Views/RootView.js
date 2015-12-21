@@ -4,12 +4,20 @@
     el: $("#landing-top-level-view"),
 
     events: {
-      'submit .zipcode-form' : 'navigateToEvents'
+      'submit .zipcode-form' : 'navigateToEvents',
+      'keyup .zipcode-form input': 'validate'
     },
 
     initialize: function(options) {
       this.template = Handlebars.compile($('#landing-top-level-view-template').html());
       this.render();
+    },
+
+    validate: function(event) {
+      event.preventDefault();
+
+      var $input = $(event.currentTarget);
+      $input.val($input.val().match(/^(\d{0,5}).*$/)[1]);
     },
 
     render: function() {
