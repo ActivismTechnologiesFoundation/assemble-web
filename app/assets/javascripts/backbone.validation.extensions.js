@@ -1,7 +1,7 @@
 (function ($) {
 
     _.extend(Backbone.Validation.patterns, {
-        date_mm_dd_yyyy: /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/,
+        date_mm_dd_yyyy: /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}\s+((0[1-9]|1[0-2]):(0[0-9]|[1-5][0-9])\s+[aApP][mM])?\s*$/,
     });
 
     _.extend(Backbone.Validation.messages, {
@@ -23,7 +23,7 @@
             }
             else if (value) {
                 var fn = Backbone.Validation.validators.pattern;
-                return fn(value.format('MM/DD/YYYY'), attr, 'date_mm_dd_yyyy', model);
+                return fn(value.format('MM/DD/YYYY hh:mm a'), attr, 'date_mm_dd_yyyy', model);
             }
         }
     });

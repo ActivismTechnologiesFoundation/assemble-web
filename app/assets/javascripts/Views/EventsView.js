@@ -148,11 +148,13 @@
       '#zipcode' : 'zipcode',
       '#starts_at': {
         observe: 'starts_at',
-        onSet: 'momentify'
+        onSet: 'momentify',
+        updateView: false
       },
       '#ends_at': {
         observe: 'ends_at',
-        onSet: 'momentify'
+        onSet: 'momentify',
+        updateView: false
       }
     },
 
@@ -181,6 +183,9 @@
     render: function() {
       var data = this.model.toJSON();
       data.topics = this.topics.toJSON();
+      data.datetime_placeholder = moment().format('MM/DD/YYYY hh:mm a');
+      data.starts_at_val = this.$('input#starts_at').val();
+      data.ends_at_val = this.$('input#ends_at').val();
 
       this.$el.html(this.template(data));
 
