@@ -21,7 +21,8 @@
 
       this.topics = options.topics;
       this.topicSelect = new AssembleApp.Views.CustomSelectView({
-        collection: new Backbone.Collection(this.topics)
+        collection: new Backbone.Collection(this.topics),
+        expanded: true
       });
       this.topicSelect.setSelected(this.topicSelect.collection.at(0));
 
@@ -162,9 +163,10 @@
       this.template = Handlebars.compile($('#event-form-template').html());
 
       this.topicSelect = new AssembleApp.Views.CustomSelectView({
-        collection: this.topics, 
-        collapsable: true
+        collection: this.topics
       });
+
+      this.startsAtTimePicker = new AssembleApp.Views.Timepicker();
 
       this.autocompleteAddressView = new AssembleApp.Views.PlacesAutoCompleteView();
       this.listenTo(this.autocompleteAddressView, 'address_chosen', this.setAddress);
@@ -175,13 +177,14 @@
     render: function() {
       var data = this.model.toJSON();
       data.topics = this.topics.toJSON();
-      data.datetime_placeholder = moment().format('MM/DD/YYYY hh:mm a');
+      data.datetime_placeholder = moment().format('MM/DD/YYYY');
       data.starts_at_val = this.$('input#starts_at').val();
       data.ends_at_val = this.$('input#ends_at').val();
 
       this.$el.html(this.template(data));
 
       this.assign(this.topicSelect, '.topic-dropdown');
+      this.assign(this.startsAtTimePicker, '.time-picker.starts_at');
 
       if (!this.model.has('address')) {
         this.assign(this.autocompleteAddressView, '.autocomplete-address');
@@ -189,7 +192,7 @@
 
       this.$('#starts_at').datepicker();
       this.$('#ends_at').datepicker();
-      
+
       this.stickit();
 
       return this.$el;
@@ -290,7 +293,7 @@
     },
 
     initialize: function(options) {
-      this.collapsable = !!options.collapsable;
+      this.collapsable = !options.expanded;
       this.template = Handlebars.compile($('#topic-select-view-template').html());
     },
 

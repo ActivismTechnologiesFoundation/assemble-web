@@ -112,10 +112,13 @@
       {{/if}}
 
       <div class='label start-date'>Starts on</div>
-      <input id='starts_at' type='text' placeholder='Ex: {{datetime_placeholder}}' value='{{starts_at_val}}' class='validatable'/>
+      <input id='starts_at' type='text' placeholder='{{datetime_placeholder}}' value='{{starts_at_val}}' class='validatable date'/>
+      <div class='time-picker starts_at'></div>
       
       <div class='label end-date'>Ends on</div>
-      <input id='ends_at' type='text' placeholder='Ex: {{datetime_placeholder}}' value='{{ends_at_val}}' class='validatable'/>
+      <input id='ends_at' type='text' placeholder='{{datetime_placeholder}}' value='{{ends_at_val}}' class='validatable date'/>
+      <div class='time-picker ends_at'></div>
+
     </div>
 
 
@@ -124,3 +127,4 @@
 </script>
 
 <%= render 'places_autocomplete_view' %>
+<%= render 'time_picker_view' %>
