@@ -32,7 +32,12 @@
 
   <p>{{description}}</p>
   
-  <p>{{momentToString starts_at 'dddd, MMMM DD @ h:mm a'}}</p>
+
+  {{#if ends_at }}
+    <p>{{momentToString starts_at 'dddd, MMMM DD @ h:mm a'}} to {{momentToString ends_at 'dddd, MMMM DD @ h:mm a'}}</p>
+  {{else}}
+    <p>{{momentToString starts_at 'dddd, MMMM DD @ h:mm a'}}</p>
+  {{/if}}
 
   <p class='address'>
     {{address.line1}} {{address.line2}}, {{address.city}} {{address.state}}, {{address.zipcode}}
