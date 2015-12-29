@@ -113,14 +113,6 @@
 
         callback(success, location);
       });
-    },
-
-    show_static_page: function(event) {
-      event.preventDefault();
-
-      console.log($(event.currentTarget).attr('href'));
-
-
     }
 
   });
@@ -195,6 +187,9 @@
         this.assign(this.autocompleteAddressView, '.autocomplete-address');
       }
 
+      this.$('#starts_at').datepicker();
+      this.$('#ends_at').datepicker();
+      
       this.stickit();
 
       return this.$el;
