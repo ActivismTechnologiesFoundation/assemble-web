@@ -117,7 +117,7 @@ class Event < ActiveRecord::Base
     defaults = options[:defaults] || {}
     row_hash = csv_row.to_hash.with_indifferent_access
     keys = [:name, :url, :description]
-    attrs = row_hash.select{|k| keys.include?(k.to_sym) }
+    attrs = row_hash.select{|k| keys.include?(k.to_s.to_sym) }
 
     #dates
     dates = parse_dates(row_hash[:date])
@@ -138,7 +138,7 @@ class Event < ActiveRecord::Base
 
   def self.parse_dates(date)
     # Example usage at http://rubular.com/r/ODEs9YNBGs
-    date_regex = /([a-zA-z]{3,9}\s*\d{1,2},\s*2015){1}.*,\s*([a-zA-Z]{3,9}\s*\d{1,2},\s*2015){1}|([a-zA-z]{3,9}\s*\d{1,2},\s*2015)\s*-?(\s*\d{1,2}:\d{1,2}[amp]{2})?\s*[to]{2}?\s*(\d{1,2}:\d{1,2}[amp]{2})*/
+    date_regex = /([a-zA-z]{3,9}\s*\d{1,2},\s*2016){1}.*,\s*([a-zA-Z]{3,9}\s*\d{1,2},\s*2016){1}|([a-zA-z]{3,9}\s*\d{1,2},\s*2016)\s*-?(\s*\d{1,2}:\d{1,2}[amp]{2})?\s*[to]{2}?\s*(\d{1,2}:\d{1,2}[amp]{2})*/
     zone = 'Eastern Time (US & Canada)'
 
     matches = date.match(date_regex).to_a
