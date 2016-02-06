@@ -4,7 +4,7 @@ class Event < ActiveRecord::Base
   has_and_belongs_to_many :topics
 
   validates :topic, presence: true, if: Proc.new { |e| !e.skip_topic_validation }
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope:  :starts_at }
   validates :description, presence: true
   validates :address, presence: true
   validates :starts_at, presence: true
@@ -158,7 +158,7 @@ class Event < ActiveRecord::Base
     elsif single_day_date && single_day_start_time
       [Time.parse("#{single_day_date} - #{single_day_start_time}"), nil]
     elsif single_day_date
-      [TIme.parse(single_day_date), nil]
+      [Time.parse(single_day_date), nil]
     end
 
     {
