@@ -31,6 +31,10 @@ class Event < ActiveRecord::Base
     .select('*')
   }
 
+  scope :newest, -> {
+    where('starts_at >= ?', Time.now.midnight - 1.day)
+  }
+
   def self.earth_distance_sql(lat, long)
     "earth_distance(ll_to_earth(#{lat}, #{long}), ll_to_earth(events.latitude, events.longitude))"
   end
@@ -56,7 +60,7 @@ class Event < ActiveRecord::Base
       @events
     end
 
-    @events.page(params[:page] || 1).per(10)
+    @events.newest.page(params[:page] || 1).per(10)
   end
 
   def topic_filter(topic_id, query=nil)
