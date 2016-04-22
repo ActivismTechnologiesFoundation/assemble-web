@@ -1,0 +1,28 @@
+<div id='upload-top-level-view' class='fb-col'></div>
+
+<script id='upload-top-level-view-template' type='text/x-handlebars-template'>
+  
+  {{#if percentage}}
+    <p class='fb fb-fixed progress'>File upload progress: <span class='percentage'>{{percentage}}%</span></p>
+  {{/if}}
+
+  <a class='fb fb-fixed upload-button'>Upload</a>
+  <input type="file" id="file-chooser" class="hidden"/>
+
+  {{#if finished_upload}}
+    <p class='fb fb-fixed'>Successfully uploaded {{upload_count}} events</p>
+  {{/if}}
+
+  {{#if failed_events}}
+    <ul class='fb-col errors'>
+      {{#each failed_events}}
+        <li class='fb-col fb-fixed'>
+          <p>Error: {{error}}</p>
+          <p>Event Name: {{event.name}}</p>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+
+</script>
+

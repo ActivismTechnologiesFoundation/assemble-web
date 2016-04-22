@@ -11,6 +11,10 @@ html, body {
   line-height: 1.1;
 }
 
+body {
+  display: flex;
+}
+
 .container {
   max-width: 1080px;
   margin: 0 auto;
@@ -117,4 +121,22 @@ input {
 .clickable(@color: @blue) { 
   cursor: pointer;
   color: @color;
+}
+
+.hidden { 
+  display: none;
+}
+
+// Scaffolding
+.fb {
+  display: flex;
+}
+
+.fb-col {
+  .fb;
+  flex-flow: column;
+}
+
+.fb-fixed {
+  flex-shrink: 0;
 }
