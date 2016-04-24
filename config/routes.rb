@@ -11,7 +11,8 @@ Rails.application.routes.draw do
   get 'privacy-policy'    => 'static_pages#privacy_policy'
   get 'contact'           => 'static_pgaes#contact'
 
-  get 'events' => 'events#index'
+  get 'events'            => 'events#index'
+  get 'upload/:token'            => 'events#upload'
 
 
 #######################################################
@@ -26,13 +27,14 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: ['json']} do
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
-      get 'topics' => 'topics#index'
-      
-      post 'events' => 'events#create'
-      put 'events' => 'events#update'
-      get 'events' => 'events#index'
+      get  'topics'             => 'topics#index'
 
-      get 'zipcodes/validate' => 'zipcodes#validate'
+      post 'events/bulk_upload' => 'events#bulk_upload'      
+      post 'events'             => 'events#create'
+      put  'events'             => 'events#update'
+      get  'events'             => 'events#index'
+
+      get  'zipcodes/validate'  => 'zipcodes#validate'
     end
   end
 end

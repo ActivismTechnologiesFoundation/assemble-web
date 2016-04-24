@@ -1,0 +1,40 @@
+#upload-top-level-view {
+  padding: 30px;
+
+  .upload-button {
+    .button;
+  }
+
+  .errors {
+    overflow: auto;
+    border: @grayDark solid 1px;
+    padding: 20px;
+
+    li {
+      border: black solid 1px;
+      border-radius: 5px;
+      margin: 6px;
+      padding: 10px;
+    }
+  }
+
+  /*
+   * Pulse animation
+  */
+
+  .pulse {
+      -webkit-animation-name: pulse;
+      animation: pulse 1s infinite;
+  }
+
+  @-webkit-keyframes pulse {
+      0% { -webkit-transform: scale(1); }
+      50% { -webkit-transform: scale(1.1); }
+      100% { -webkit-transform: scale(1); }
+  }
+  @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+  }
+}

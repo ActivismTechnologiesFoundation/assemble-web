@@ -93,6 +93,7 @@ class Event < ActiveRecord::Base
   def self.load_csv(csv, defaults={})
     csv = get_csv(csv)
     failed = []
+    upload_count = 0
     csv.each_with_index do |row, i|
       begin 
         ActiveRecord::Base.transaction do 
@@ -102,6 +103,8 @@ class Event < ActiveRecord::Base
           @event.save!
 
           event_topics(row).each { |t| @event.topics << t }
+
+          upload_count += 1
         end
         sleep 0.15
       rescue => e
@@ -115,6 +118,8 @@ class Event < ActiveRecord::Base
     else
       puts "Success: All events uploaded!"
     end
+
+    return failed, upload_count
   end
 
   def self.event_attributes(csv_row, options={})
