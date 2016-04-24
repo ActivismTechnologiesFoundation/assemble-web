@@ -32,13 +32,9 @@ module Api
       end
 
       def bulk_upload
-        if params[:token] == ENV['BULK_UPLOAD_TOKEN']
-          failed, upload_count = Event.load_csv(params[:file_url])
-          
-          render json: { success: true, failed_events: failed, upload_count: upload_count }
-        else
-          head :not_found
-        end
+        failed, upload_count = Event.load_csv(params[:file_url])
+        
+        render json: { success: true, failed_events: failed, upload_count: upload_count }
       end
 
       private 
