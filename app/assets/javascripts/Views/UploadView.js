@@ -34,30 +34,30 @@
         },
 
         uploadFile: function() {
-            let file = this.$("#file-chooser").get(0).files[0],
-                makeUrlCompletion = (error, stat) => {
+            var file = this.$("#file-chooser").get(0).files[0],
+                makeUrlCompletion = function(error, stat){
                     if (error) {
                         alert('Error: Unable to obtain public url');
                     }
                     else {
                         this.createEvents(stat.url);
                     }
-                },
-                writeCompletion = (error, stat) => {
+                }.bind(this),
+                writeCompletion = function(error, stat){
                     if (!error) {
                         this.dropbox.makeUrl(stat.path, { download: true}, makeUrlCompletion);
                     }
                     else {
                         alert('Error: Unable to upload to dropbox.');
                     }
-                },
-                xhrListener = (dbXhr) => {
-                    dbXhr.xhr.upload.onprogress = (event) => {
-                        let percentage = event.loaded / event.total * 100.0;
+                }.bind(this),
+                xhrListener = function(dbXhr){
+                    dbXhr.xhr.upload.onprogress = function(event){
+                        var percentage = event.loaded / event.total * 100.0;
                         this.model.set('percentage', percentage.toFixed(1));
-                    };
+                    }.bind(this);
                     return true;  // otherwise, the XMLHttpRequest is canceled
-                };
+                }.bind(this);
             this.dropbox.onXhr.addListener(xhrListener);
             this.dropbox.writeFile(file.name, file, writeCompletion);
             this.dropbox.onXhr.removeListener(xhrListener);
@@ -71,7 +71,7 @@
                 .timeout(5*60*1000) // 5 minutes
                 .set("Authorization", "Token token="+AssembleApp.Data.Shared.apiKey)
                 .set("Accept", "application/json")
-                .end((error, response) => {
+                .end(function(error, response){
                     this.$('.upload-button').removeClass('pulse');
 
                     if (!error) { 
@@ -86,7 +86,7 @@
                     else {
                         alert('Error: Unable to create events');
                     }
-                });
+                }.bind(this));
         }
 
 
