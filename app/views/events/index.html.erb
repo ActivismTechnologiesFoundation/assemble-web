@@ -14,7 +14,7 @@
 <script id='events-top-level-view-template' type='text/x-handlebars-template'>
   <div class='side-bar'>
     <div id='filter-controls'>
-      <div id='add-event' class='filter-option'>Add Event<span>+</span></div>
+      <div class='add-event filter-option'>Add Event<span>+</span></div>
       <div id='filter-address' class='filter-option'>
       </div>
       <div id='topic-select'></div>
@@ -23,7 +23,9 @@
 
   <div class='main'>
     <h2>Events</h2>
-    <ul id='events-list' class='test-class'></ul>
+    <ul id='events-list' class='test-class'>
+    </ul>
+    <p class='no-events-placeholder'>No upcoming events found, try again later or <a class='add-event'>add your own event!</a></p>
   </div>
 </script> 
 

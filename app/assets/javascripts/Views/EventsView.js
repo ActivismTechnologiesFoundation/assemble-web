@@ -4,7 +4,7 @@
     el: $('#events-top-level-view'),
 
     events: {
-      'click #add-event': 'showEventForm',
+      'click .add-event': 'showEventForm',
       'keyup #filter-address input': 'clearLocation'
     },
 
@@ -82,7 +82,24 @@
         delete data.zipcode;
       }
 
-      this.eventsCollection.fetch({data: data, reset: true});
+      this.eventsCollection.fetch({
+        data: data, 
+        reset: true, 
+        silent: true, 
+        success: success.bind(this)
+      });
+
+      function success(collection, response, options) {
+        if (collection.models.length <= 0){
+          this.$('#events-list').hide();
+          this.$('.no-events-placeholder').show();
+        }
+        else {
+          this.eventsCollection.reset(collection.models);
+          this.$('#events-list').show();
+          this.$('.no-events-placeholder').hide();
+        }
+      }
     },
 
     showEventForm: function() {
@@ -119,8 +136,6 @@
       event.preventDefault();
 
       console.log($(event.currentTarget).attr('href'));
-
-
     }
 
   });
